@@ -57,6 +57,9 @@ ext{
     annotationProcessorLibs =[glideCompiler]
 
 
-
+    dependencies = [
+            // -------BaseRecyclerViewAdapterHelper---------
+            baseRecyclerViewAdapterHelper: 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30',
+    ]
 
 }

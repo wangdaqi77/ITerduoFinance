@@ -127,4 +127,6 @@ dependencies {
     //运行时权限
     implementation 'me.weyye.hipermission:library:1.0.7'
 
+    // ---------BaseRecyclerViewAdapterHelper-----------
+    implementation rootProject.ext.dependencies.baseRecyclerViewAdapterHelper
 }

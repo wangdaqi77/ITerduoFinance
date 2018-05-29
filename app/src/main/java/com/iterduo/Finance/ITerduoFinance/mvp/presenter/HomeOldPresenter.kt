@@ -1,7 +1,6 @@
 package com.iterduo.Finance.ITerduoFinance.mvp.presenter
 
 import com.iterduo.Finance.ITerduoFinance.base.BasePresenter
-import com.iterduo.Finance.ITerduoFinance.mvp.contract.HomeContract
 import com.iterduo.Finance.ITerduoFinance.mvp.contract.HomeOldContract
 import com.iterduo.Finance.ITerduoFinance.mvp.model.HomeModel
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
@@ -13,7 +12,7 @@ import com.iterduo.Finance.ITerduoFinance.net.exception.ExceptionHandle
  * (数据是 Banner 数据和一页数据组合而成的 HomeBean,查看接口然后在分析就明白了)
  */
 
-class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter {
+class HomeOldPresenter : BasePresenter<HomeOldContract.View>(), HomeOldContract.Presenter {
 
 
     private var bannerHomeBean: HomeBean? = null

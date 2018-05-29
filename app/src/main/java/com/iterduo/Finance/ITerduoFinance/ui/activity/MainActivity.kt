@@ -23,17 +23,18 @@ import java.util.*
 
 class MainActivity : BaseActivity() {
 
-
-    private val mTitles = arrayOf("每日精选", "发现", "热门", "我的")
+    private val mTitles = arrayOf("首页", "快讯", "每日精选", "发现", "热门", "我的")
 
     // 未被选中的图标
-    private val mIconUnSelectIds = intArrayOf(R.mipmap.ic_home_normal, R.mipmap.ic_discovery_normal, R.mipmap.ic_hot_normal, R.mipmap.ic_mine_normal)
+    private val mIconUnSelectIds = intArrayOf(R.mipmap.ic_home_normal, R.mipmap.ic_discovery_normal, R.mipmap.ic_home_normal, R.mipmap.ic_discovery_normal, R.mipmap.ic_hot_normal, R.mipmap.ic_mine_normal)
     // 被选中的图标
-    private val mIconSelectIds = intArrayOf(R.mipmap.ic_home_selected, R.mipmap.ic_discovery_selected, R.mipmap.ic_hot_selected, R.mipmap.ic_mine_selected)
+    private val mIconSelectIds = intArrayOf(R.mipmap.ic_home_selected, R.mipmap.ic_discovery_selected, R.mipmap.ic_home_selected, R.mipmap.ic_discovery_selected, R.mipmap.ic_hot_selected, R.mipmap.ic_mine_selected)
 
     private val mTabEntities = ArrayList<CustomTabEntity>()
 
     private var mHomeFragment: HomeFragment? = null
+    private var mExpressNewsFragment: ExpressNewsFragment? = null
+    private var mHomeOldFragment: HomeOldFragment? = null
     private var mDiscoveryFragment: DiscoveryFragment? = null
     private var mHotFragment: HotFragment? = null
     private var mMineFragment: MineFragment? = null
@@ -91,24 +92,41 @@ class MainActivity : BaseActivity() {
                 mHomeFragment = it
                 transaction.add(R.id.fl_container, it, "home")
             }
-            1  //发现
+            1  //快讯
+            -> mExpressNewsFragment?.let {
+                transaction.show(it)
+            } ?: ExpressNewsFragment.getInstance(mTitles[position]).let {
+                mExpressNewsFragment = it
+                transaction.add(R.id.fl_container, it, "express news")
+            }
+            2 // 首页
+            -> mHomeOldFragment?.let {
+                transaction.show(it)
+            } ?: HomeOldFragment.getInstance(mTitles[position]).let {
+                mHomeOldFragment = it
+                transaction.add(R.id.fl_container, it, "home old")
+            }
+            3  //发现
             -> mDiscoveryFragment?.let {
                 transaction.show(it)
             } ?: DiscoveryFragment.getInstance(mTitles[position]).let {
                 mDiscoveryFragment = it
-                transaction.add(R.id.fl_container, it, "discovery") }
-            2  //热门
+                transaction.add(R.id.fl_container, it, "discovery")
+            }
+            4  //热门
             -> mHotFragment?.let {
                 transaction.show(it)
             } ?: HotFragment.getInstance(mTitles[position]).let {
                 mHotFragment = it
-                transaction.add(R.id.fl_container, it, "hot") }
-            3 //我的
+                transaction.add(R.id.fl_container, it, "hot")
+            }
+            5 //我的
             -> mMineFragment?.let {
                 transaction.show(it)
             } ?: MineFragment.getInstance(mTitles[position]).let {
                 mMineFragment = it
-                transaction.add(R.id.fl_container, it, "mine") }
+                transaction.add(R.id.fl_container, it, "mine")
+            }
 
             else -> {
 
@@ -126,7 +144,7 @@ class MainActivity : BaseActivity() {
      * @param transaction transaction
      */
     private fun hideFragments(transaction: FragmentTransaction) {
-        mHomeFragment?.let { transaction.hide(it) }
+        mHomeOldFragment?.let { transaction.hide(it) }
         mDiscoveryFragment?.let { transaction.hide(it) }
         mHotFragment?.let { transaction.hide(it) }
         mMineFragment?.let { transaction.hide(it) }

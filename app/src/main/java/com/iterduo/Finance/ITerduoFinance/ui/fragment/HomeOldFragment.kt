@@ -9,11 +9,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.base.BaseFragment
-import com.iterduo.Finance.ITerduoFinance.mvp.contract.HomeContract
 import com.iterduo.Finance.ITerduoFinance.mvp.contract.HomeOldContract
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
 import com.iterduo.Finance.ITerduoFinance.mvp.presenter.HomeOldPresenter
-import com.iterduo.Finance.ITerduoFinance.mvp.presenter.HomePresenter
 import com.iterduo.Finance.ITerduoFinance.net.exception.ErrorStatus
 import com.iterduo.Finance.ITerduoFinance.showToast
 import com.iterduo.Finance.ITerduoFinance.ui.activity.SearchActivity
@@ -27,14 +25,14 @@ import java.util.*
 
 @Suppress("DEPRECATION")
 /**
- * Created by wq
- * 首页
+ * Created by xuhao on 2017/11/8.
+ * 首页精选
  */
 
-class HomeFragment : BaseFragment(), HomeContract.View {
+class HomeOldFragment : BaseFragment(), HomeOldContract.View {
 
 
-    private val mPresenter by lazy { HomePresenter() }
+    private val mPresenter by lazy { HomeOldPresenter() }
 
     private var mTitle: String? = null
 
@@ -48,8 +46,8 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     private var mMaterialHeader: MaterialHeader? = null
 
     companion object {
-        fun getInstance(title: String): HomeFragment {
-            val fragment = HomeFragment()
+        fun getInstance(title: String): HomeOldFragment {
+            val fragment = HomeOldFragment()
             val bundle = Bundle()
             fragment.arguments = bundle
             fragment.mTitle = title
@@ -67,7 +65,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     }
 
 
-    override fun getLayoutId(): Int = R.layout.fragment_home
+    override fun getLayoutId(): Int = R.layout.fragment_home_old
 
 
     /**
