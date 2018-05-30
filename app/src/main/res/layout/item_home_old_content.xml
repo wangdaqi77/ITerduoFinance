@@ -3,8 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_title_bg"
     android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/iv_cover_feed"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/placeholder_banner" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,7 +33,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="15dp"
             android:layout_toEndOf="@id/iv_avatar"
-            android:layout_toStartOf="@+id/tv_follow"
+            android:layout_toStartOf="@+id/tv_category"
             android:orientation="vertical">
 
             <TextView
@@ -39,43 +46,29 @@
                 tools:text="我正在用 Kotlin 写 Android" />
 
             <TextView
-                android:id="@+id/tv_desc"
+                android:id="@+id/tv_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
                 android:textSize="12sp"
                 tools:text="a/b/c/03`18`" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_follow"
+            android:id="@+id/tv_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/padding_common_h"
-            android:background="@drawable/btn_radius_black_border_bg"
-            android:paddingBottom="3dp"
-            android:paddingEnd="@dimen/padding_common_d"
-            android:paddingStart="@dimen/padding_common_d"
-            android:paddingTop="3dp"
-            android:text="@string/video_attention"
-            android:textColor="@color/color_black"
-            android:textSize="@dimen/textSize_small" />
+            android:layout_marginEnd="15dp"
+            tools:text="#搞笑" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_darker_gray" />
 
     </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_common_h"
-        tools:ignore="RtlSymmetry">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/fl_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false" />
-    </LinearLayout>
 
 </LinearLayout>

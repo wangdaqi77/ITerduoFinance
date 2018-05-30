@@ -29,7 +29,7 @@ fun <T> ViewGroup.find(calzz: Class<T>): T? {
         if (view.javaClass.name == calzz.name) return view as T
         if (view is ViewGroup) {
             view.find(calzz)
-    }
+        }
     }
     return null
 }
@@ -129,4 +129,15 @@ fun BaseViewHolder.setTextForDef(tvId: Int, str: String?, defStr: String?) {
 
 fun BaseViewHolder.setTextForDef(tvId: Int, str: String?) {
     setTextForDef(tvId, str, null)
+}
+
+/**
+ * 阅读量转换
+ */
+fun Long.toReadedStr(): String? {
+    return when {
+        this in 0..10000 -> "$this"
+        else -> String.format("%.1f万", this / 10000f)
+    }
+
 }

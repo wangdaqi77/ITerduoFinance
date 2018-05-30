@@ -23,7 +23,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="@string/hot_title"
-                android:textColor="@color/color_item_title"
+                android:textColor="@color/color_item_title_nor"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </RelativeLayout>

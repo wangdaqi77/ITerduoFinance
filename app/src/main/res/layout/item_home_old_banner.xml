@@ -8,13 +8,12 @@
     <cn.bingoogolapple.bgabanner.BGABanner
         android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="214dp"
+        android:layout_height="230dp"
         android:scaleType="fitXY"
-        app:banner_indicatorGravity="bottom|center_horizontal"
-        app:banner_isNumberIndicator="false"
+        app:banner_indicatorGravity="bottom|right"
         app:banner_placeholderDrawable="@drawable/placeholder_banner"
-        app:banner_pointContainerBackground="@android:color/transparent"
-        app:banner_tipTextColor="@android:color/transparent"
-        app:banner_transitionEffect="alpha" />
+        app:banner_tipTextSize="@dimen/textSize_titleSmall"
+        app:banner_tipTextColor="@color/color_title_bg"
+        app:banner_transitionEffect="alpha"/>
 
 </LinearLayout>

@@ -15,7 +15,7 @@ import com.iterduo.Finance.ITerduoFinance.mvp.presenter.HomeOldPresenter
 import com.iterduo.Finance.ITerduoFinance.net.exception.ErrorStatus
 import com.iterduo.Finance.ITerduoFinance.showToast
 import com.iterduo.Finance.ITerduoFinance.ui.activity.SearchActivity
-import com.iterduo.Finance.ITerduoFinance.ui.adapter.HomeAdapter
+import com.iterduo.Finance.ITerduoFinance.ui.adapter.HomeOldAdapter
 import com.iterduo.Finance.ITerduoFinance.utils.StatusBarUtil
 import com.orhanobut.logger.Logger
 import com.scwang.smartrefresh.header.MaterialHeader
@@ -38,7 +38,7 @@ class HomeOldFragment : BaseFragment(), HomeOldContract.View {
 
     private var num: Int = 1
 
-    private var mHomeAdapter: HomeAdapter? = null
+    private var mHomeAdapter: HomeOldAdapter? = null
 
     private var loadingMore = false
 
@@ -178,7 +178,7 @@ class HomeOldFragment : BaseFragment(), HomeOldContract.View {
         Logger.d(homeBean)
 
         // Adapter
-        mHomeAdapter = HomeAdapter(activity, homeBean.issueList[0].itemList)
+        mHomeAdapter = HomeOldAdapter(activity, homeBean.issueList[0].itemList)
         //设置 banner 大小
         mHomeAdapter?.setBannerSize(homeBean.issueList[0].count)
 

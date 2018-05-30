@@ -144,6 +144,8 @@ class MainActivity : BaseActivity() {
      * @param transaction transaction
      */
     private fun hideFragments(transaction: FragmentTransaction) {
+        mHomeFragment?.let { transaction.hide(it) }
+        mExpressNewsFragment?.let { transaction.hide(it) }
         mHomeOldFragment?.let { transaction.hide(it) }
         mDiscoveryFragment?.let { transaction.hide(it) }
         mHotFragment?.let { transaction.hide(it) }

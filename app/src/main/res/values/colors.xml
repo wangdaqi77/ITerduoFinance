@@ -38,7 +38,9 @@
     <color name="color_blue">#87CEEB</color>
 
     <!-- item 标题颜色 -->
-    <color name="color_item_title">#000000</color>
+    <color name="color_item_title_nor">#101D37</color>
+    <color name="color_item_title_sel">#999999</color>
+    <color name="color_item_tag">#9EA4AE</color>
 
     <color name="color_lighter_gray">#ddd</color>
     <color name="color_darker_gray">#aaa</color>

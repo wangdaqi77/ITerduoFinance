@@ -10,14 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import cn.bingoogolapple.bgabanner.BGABanner
-import com.a91power.a91pos.common.toReadedStr
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.iterduo.Finance.ITerduoFinance.Constants
 import com.iterduo.Finance.ITerduoFinance.R
+import com.iterduo.Finance.ITerduoFinance.durationFormat
 import com.iterduo.Finance.ITerduoFinance.glide.GlideApp
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
 import com.iterduo.Finance.ITerduoFinance.ui.activity.VideoDetailActivity
-import com.iterduo.Finance.ITerduoFinance.utils.DateUtils
 import com.iterduo.Finance.ITerduoFinance.view.recyclerview.ViewHolder
 import com.iterduo.Finance.ITerduoFinance.view.recyclerview.adapter.CommonAdapter
 import io.reactivex.Observable
@@ -27,7 +26,7 @@ import io.reactivex.Observable
  * desc: 首页精选的 Adapter
  */
 
-class HomeAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
+class HomeOldAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
     : CommonAdapter<HomeBean.Issue.Item>(context, data, -1) {
 
 
@@ -146,11 +145,11 @@ class HomeAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
             ITEM_TYPE_BANNER ->
-                ViewHolder(inflaterView(R.layout.item_home_banner, parent))
+                ViewHolder(inflaterView(R.layout.item_home_old_banner, parent))
             ITEM_TYPE_TEXT_HEADER ->
-                ViewHolder(inflaterView(R.layout.item_home_header, parent))
+                ViewHolder(inflaterView(R.layout.item_home_old_header, parent))
             else ->
-                ViewHolder(inflaterView(R.layout.item_home_content, parent))
+                ViewHolder(inflaterView(R.layout.item_home_old_content, parent))
         }
     }
 
@@ -170,37 +169,52 @@ class HomeAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
      */
     private fun setVideoItem(holder: ViewHolder, item: HomeBean.Issue.Item) {
         val itemData = item.data
-        val defPlaceHolder = R.drawable.placeholder_banner
-        val title = itemData?.title ?: ""
-        val author = itemData?.author?.name
-        val coverFoodUrl = itemData?.cover?.feed
-        val time = DateUtils.getNewsTime(System.currentTimeMillis())
-        val readedStr = 20000L.toReadedStr()
 
+        val defAvatar = R.mipmap.default_avatar
+        val cover = itemData?.cover?.feed
+        var avatar = itemData?.author?.icon
+        var tagText: String? = "#"
 
+        // 作者出处为空，就显获取提供者的信息
+        if (avatar.isNullOrEmpty()) {
+            avatar = itemData?.provider?.icon
+        }
+        // 加载封页图
+        GlideApp.with(mContext)
+                .load(cover)
+                .placeholder(R.drawable.placeholder_banner)
+                .transition(DrawableTransitionOptions().crossFade())
+                .into(holder.getView(R.id.iv_cover_feed))
 
-        if (coverFoodUrl.isNullOrEmpty()) {
+        // 如果提供者信息为空，就显示默认
+        if (avatar.isNullOrEmpty()) {
             GlideApp.with(mContext)
-                    .load(defPlaceHolder)
-                    .placeholder(defPlaceHolder).circleCrop()
+                    .load(defAvatar)
+                    .placeholder(R.mipmap.default_avatar).circleCrop()
                     .transition(DrawableTransitionOptions().crossFade())
-                    .into(holder.getView(R.id.iv_cover_feed))
+                    .into(holder.getView(R.id.iv_avatar))
 
         } else {
-            // 加载封页图
             GlideApp.with(mContext)
-                    .load(coverFoodUrl)
-                    .placeholder(R.drawable.placeholder_banner)
+                    .load(avatar)
+                    .placeholder(R.mipmap.default_avatar).circleCrop()
                     .transition(DrawableTransitionOptions().crossFade())
-                    .into(holder.getView(R.id.iv_cover_feed))
+                    .into(holder.getView(R.id.iv_avatar))
         }
         holder.setText(R.id.tv_title, itemData?.title ?: "")
 
-        holder.setText(R.id.tv_time, time ?: "")
+        //遍历标签
+        itemData?.tags?.take(4)?.forEach {
+            tagText += (it.name + "/")
+        }
+        // 格式化时间
+        val timeFormat = durationFormat(itemData?.duration)
 
-        holder.setText(R.id.tv_author_name, author ?: "")
+        tagText += timeFormat
 
-        holder.setText(R.id.tv_read, "${readedStr}人阅读")
+        holder.setText(R.id.tv_tag, tagText!!)
+
+        holder.setText(R.id.tv_category, "#" + itemData?.category)
 
         holder.setOnItemClickListener(listener = View.OnClickListener {
             goToVideoPlayer(mContext as Activity, holder.getView(R.id.iv_cover_feed), item)
@@ -232,4 +246,3 @@ class HomeAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
 
 
 }
-
