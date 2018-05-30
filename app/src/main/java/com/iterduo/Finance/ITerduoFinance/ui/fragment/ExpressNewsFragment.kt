@@ -7,7 +7,7 @@ import com.iterduo.Finance.ITerduoFinance.base.BaseFragment
 import com.iterduo.Finance.ITerduoFinance.base.BaseFragmentAdapter
 import com.iterduo.Finance.ITerduoFinance.utils.StatusBarUtil
 import com.iterduo.Finance.ITerduoFinance.view.TabLayoutHelper
-import kotlinx.android.synthetic.main.fragment_hot.*
+import kotlinx.android.synthetic.main.fragment_express_news.*
 
 /**
  * Created by xuhao on 2017/12/7.
@@ -31,7 +31,7 @@ class ExpressNewsFragment : BaseFragment() {
         }
     }
 
-    override fun getLayoutId(): Int = R.layout.fragment_hot
+    override fun getLayoutId(): Int = R.layout.fragment_express_news
 
     override fun initView() {
 

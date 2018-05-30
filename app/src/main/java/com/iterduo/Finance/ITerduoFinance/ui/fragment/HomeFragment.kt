@@ -10,9 +10,7 @@ import android.support.v7.widget.RecyclerView
 import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.base.BaseFragment
 import com.iterduo.Finance.ITerduoFinance.mvp.contract.HomeContract
-import com.iterduo.Finance.ITerduoFinance.mvp.contract.HomeOldContract
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
-import com.iterduo.Finance.ITerduoFinance.mvp.presenter.HomeOldPresenter
 import com.iterduo.Finance.ITerduoFinance.mvp.presenter.HomePresenter
 import com.iterduo.Finance.ITerduoFinance.net.exception.ErrorStatus
 import com.iterduo.Finance.ITerduoFinance.showToast
@@ -21,7 +19,7 @@ import com.iterduo.Finance.ITerduoFinance.ui.adapter.HomeAdapter
 import com.iterduo.Finance.ITerduoFinance.utils.StatusBarUtil
 import com.orhanobut.logger.Logger
 import com.scwang.smartrefresh.header.MaterialHeader
-import kotlinx.android.synthetic.main.fragment_home_old.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
 import java.util.*
 
