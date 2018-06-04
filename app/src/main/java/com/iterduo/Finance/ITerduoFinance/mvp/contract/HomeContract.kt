@@ -5,7 +5,7 @@ import com.iterduo.Finance.ITerduoFinance.base.IPresenter
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
 
 /**
- * Created by xuhao on 2017/11/8.
+ * Created by wq on 2018/6.
  * 契约类
  */
 

@@ -16,7 +16,6 @@ import com.iterduo.Finance.ITerduoFinance.net.exception.ErrorStatus
 import com.iterduo.Finance.ITerduoFinance.showToast
 import com.iterduo.Finance.ITerduoFinance.ui.activity.SearchActivity
 import com.iterduo.Finance.ITerduoFinance.ui.adapter.HomeAdapter
-import com.iterduo.Finance.ITerduoFinance.ui.adapter.HomeOldAdapter
 import com.iterduo.Finance.ITerduoFinance.utils.StatusBarUtil
 import com.orhanobut.logger.Logger
 import com.scwang.smartrefresh.header.MaterialHeader
@@ -39,7 +38,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
     private var num: Int = 1
 
-    private var mHomeOldAdapter: HomeAdapter? = null
+    private var mHomeAdapter: HomeAdapter? = null
 
     private var loadingMore = false
 
@@ -113,11 +112,11 @@ class HomeFragment : BaseFragment(), HomeContract.View {
                     iv_search.setImageResource(R.mipmap.ic_action_search_white)
                     tv_header_title.text = ""
                 } else {
-                    if (mHomeOldAdapter?.mData!!.size > 1) {
+                    if (mHomeAdapter?.mData!!.size > 1) {
                         toolbar.setBackgroundColor(getColor(R.color.color_title_bg))
                         iv_search.setImageResource(R.mipmap.ic_action_search_black)
-                        val itemList = mHomeOldAdapter!!.mData
-                        val item = itemList[currentVisibleItemPosition + mHomeOldAdapter!!.bannerItemSize - 1]
+                        val itemList = mHomeAdapter!!.mData
+                        val item = itemList[currentVisibleItemPosition + mHomeAdapter!!.bannerItemSize - 1]
                         if (item.type == "textHeader") {
                             tv_header_title.text = item.data?.text
                         } else {
@@ -179,11 +178,11 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         Logger.d(homeBean)
 
         // Adapter
-        mHomeOldAdapter = HomeAdapter(activity, homeBean.issueList[0].itemList)
+        mHomeAdapter = HomeAdapter(activity, homeBean.issueList[0].itemList)
         //设置 banner 大小
-        mHomeOldAdapter?.setBannerSize(homeBean.issueList[0].count)
+        mHomeAdapter?.setBannerSize(homeBean.issueList[0].count)
 
-        mRecyclerView.adapter = mHomeOldAdapter
+        mRecyclerView.adapter = mHomeAdapter
         mRecyclerView.layoutManager = linearLayoutManager
         mRecyclerView.itemAnimator = DefaultItemAnimator()
 
@@ -191,7 +190,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
     override fun setMoreData(itemList: ArrayList<HomeBean.Issue.Item>) {
         loadingMore = false
-        mHomeOldAdapter?.addItemData(itemList)
+        mHomeAdapter?.addItemData(itemList)
     }
 
 
