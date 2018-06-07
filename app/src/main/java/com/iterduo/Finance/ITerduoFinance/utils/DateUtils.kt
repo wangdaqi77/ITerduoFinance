@@ -29,8 +29,9 @@ object DateUtils {
     }
 
 
-    fun getNewsTime(date: Long?): String? {
-        if (date == null) return null
+    fun getNewsTime(time: Int?): String? {
+        if (time == null) return null
+        val date = time * 1000L
         val sb = StringBuffer()
         val minMill = (60 * 1000).toLong()//1min
         val hourMill = 60 * minMill//1hour

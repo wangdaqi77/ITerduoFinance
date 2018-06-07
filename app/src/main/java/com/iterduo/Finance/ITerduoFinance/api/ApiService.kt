@@ -1,13 +1,8 @@
 package com.iterduo.Finance.ITerduoFinance.api
 
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.AuthorInfoBean
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.CategoryBean
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.TabInfoBean
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.*
 import io.reactivex.Observable
-import retrofit2.http.GET
-import retrofit2.http.Query
-import retrofit2.http.Url
+import retrofit2.http.*
 
 /**
  * Created by xuhao on 2017/11/16.
@@ -15,6 +10,16 @@ import retrofit2.http.Url
  */
 
 interface ApiService{
+
+    /**
+     * 首页精选
+     */
+    @POST("v1/banner/get_banners")
+    fun getBanner(): Observable<BannerBean>
+
+    @GET("v1/news/get_news_list")
+    fun getHomeNewsList(@Query("index") page: Int,@Query("size") pageSize: Int): Observable<HomeDataBean>
+
 
     /**
      * 首页精选

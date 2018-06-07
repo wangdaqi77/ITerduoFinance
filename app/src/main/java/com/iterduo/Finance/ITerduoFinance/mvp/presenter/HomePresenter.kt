@@ -4,7 +4,9 @@ import com.iterduo.Finance.ITerduoFinance.base.BasePresenter
 import com.iterduo.Finance.ITerduoFinance.mvp.contract.HomeContract
 import com.iterduo.Finance.ITerduoFinance.mvp.contract.HomeOldContract
 import com.iterduo.Finance.ITerduoFinance.mvp.model.HomeModel
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.BannerItem
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeDataBean
 import com.iterduo.Finance.ITerduoFinance.net.exception.ExceptionHandle
 
 /**
@@ -15,10 +17,10 @@ import com.iterduo.Finance.ITerduoFinance.net.exception.ExceptionHandle
 
 class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter {
 
+    private var bannerList:  ArrayList<BannerItem>? = null
 
-    private var bannerHomeBean: HomeBean? = null
-
-    private var nextPageUrl:String?=null     //加载首页的Banner 数据+一页数据合并后，nextPageUrl没 add
+    private var page = 1
+    private var pageSize=15
 
     private val homeModel: HomeModel by lazy {
 
@@ -28,57 +30,35 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
     /**
      * 获取首页精选数据 banner 加 一页数据
      */
-    override fun requestHomeData(num: Int) {
+    override fun requestHomeData() {
         // 检测是否绑定 View
         checkViewAttached()
+        bannerList = null
         mRootView?.showLoading()
-        val disposable = homeModel.requestHomeData(num)
-                .flatMap({ homeBean ->
+        page = 1
+        val disposable = homeModel.requestHomeBannerData()
+                .flatMap({ bannerBean ->
 
-                    //过滤掉 Banner2(包含广告,等不需要的 Type), 具体查看接口分析
-                    val bannerItemList = homeBean.issueList[0].itemList
-
-                    bannerItemList.filter { item ->
-                        item.type=="banner2"|| item.type=="horizontalScrollCard"
-                    }.forEach{ item ->
-                        //移除 item
-                        bannerItemList.remove(item)
-                    }
-
-                    bannerHomeBean = homeBean //记录第一页是当做 banner 数据
-
+                    bannerList = bannerBean.data
 
                     //根据 nextPageUrl 请求下一页数据
-                    homeModel.loadMoreData(homeBean.nextPageUrl)
+                    homeModel.loadMoreData(page,pageSize)
                 })
 
-                .subscribe({ homeBean->
+                .subscribe({ homeData->
+                    page++
                     mRootView?.apply {
                         dismissLoading()
-
-                        nextPageUrl = homeBean.nextPageUrl
-                        //过滤掉 Banner2(包含广告,等不需要的 Type), 具体查看接口分析
-                        val newBannerItemList = homeBean.issueList[0].itemList
-
-                        newBannerItemList.filter { item ->
-                            item.type=="banner2"||item.type=="horizontalScrollCard"
-                        }.forEach{ item ->
-                            //移除 item
-                            newBannerItemList.remove(item)
-                        }
-                        // 重新赋值 Banner 长度
-                        bannerHomeBean!!.issueList[0].count = bannerHomeBean!!.issueList[0].itemList.size
-
-                        //赋值过滤后的数据 + banner 数据
-                        bannerHomeBean?.issueList!![0].itemList.addAll(newBannerItemList)
-
-                        setHomeData(bannerHomeBean!!)
-
+                        homeData.bannerData = this@HomePresenter.bannerList
+                        setHomeData(homeData!!)
                     }
 
                 }, { t ->
                     mRootView?.apply {
                         dismissLoading()
+//                        if (bannerList!=null) {
+//                            HomeDataBean("",ArrayList(),bannerList, -1)
+//                        }
                         showError(ExceptionHandle.handleException(t),ExceptionHandle.errorCode)
                     }
                 })
@@ -92,22 +72,12 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
      */
 
     override fun loadMoreData() {
-         val disposable = nextPageUrl?.let {
-             homeModel.loadMoreData(it)
+         val disposable =
+             homeModel.loadMoreData(page,pageSize)
                      .subscribe({ homeBean->
+                         page++
                          mRootView?.apply {
-                             //过滤掉 Banner2(包含广告,等不需要的 Type), 具体查看接口分析
-                             val newItemList = homeBean.issueList[0].itemList
-
-                             newItemList.filter { item ->
-                                 item.type=="banner2"||item.type=="horizontalScrollCard"
-                             }.forEach{ item ->
-                                 //移除 item
-                                 newItemList.remove(item)
-                             }
-
-                             nextPageUrl = homeBean.nextPageUrl
-                             setMoreData(newItemList)
+                             setMoreData(homeBean.data)
                          }
 
                      },{ t ->
@@ -115,9 +85,6 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
                              showError(ExceptionHandle.handleException(t),ExceptionHandle.errorCode)
                          }
                      })
-
-
-         }
         if (disposable != null) {
             addSubscription(disposable)
         }

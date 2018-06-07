@@ -140,7 +140,7 @@ class ExpressNewsAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
         val content =
                 "据全球审计巨头德勤（Deloitte）的报告《区块链技术演进：从GitHub平台得出的见解》显示，2017年，仅前6个月，在GitHub上新创建的区块链项目就达到近25000个，与2016年全年的新建区块链项目数量几乎持平。与此同时，现阶段能主网上线的区块链项目却寥若晨星。也正因为能够看到具体落地的区块链应用还太少，才导致现阶段社会上对区块链的负能量过多。"
         val author = itemData?.author?.name
-        val time = DateUtils.getNewsTime(System.currentTimeMillis())
+        val time = DateUtils.getNewsTime(5254543)
 
 
         holder.setText(R.id.tv_title, itemData?.title ?: "")

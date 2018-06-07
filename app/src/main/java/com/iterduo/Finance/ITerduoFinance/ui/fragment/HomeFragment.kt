@@ -10,7 +10,8 @@ import android.support.v7.widget.RecyclerView
 import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.base.BaseFragment
 import com.iterduo.Finance.ITerduoFinance.mvp.contract.HomeContract
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeDataBean
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.News
 import com.iterduo.Finance.ITerduoFinance.mvp.presenter.HomePresenter
 import com.iterduo.Finance.ITerduoFinance.net.exception.ErrorStatus
 import com.iterduo.Finance.ITerduoFinance.showToast
@@ -22,6 +23,7 @@ import com.scwang.smartrefresh.header.MaterialHeader
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION")
 /**
@@ -30,18 +32,10 @@ import java.util.*
  */
 
 class HomeFragment : BaseFragment(), HomeContract.View {
-
-
     private val mPresenter by lazy { HomePresenter() }
-
     private var mTitle: String? = null
-
-    private var num: Int = 1
-
     private var mHomeAdapter: HomeAdapter? = null
-
     private var loadingMore = false
-
     private var isRefresh = false
     private var mMaterialHeader: MaterialHeader? = null
 
@@ -77,7 +71,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         mRefreshLayout.setEnableHeaderTranslationContent(true)
         mRefreshLayout.setOnRefreshListener {
             isRefresh = true
-            mPresenter.requestHomeData(num)
+            mPresenter.requestHomeData()
         }
         mMaterialHeader = mRefreshLayout.refreshHeader as MaterialHeader?
         //打开下拉刷新区域块背景:
@@ -113,15 +107,15 @@ class HomeFragment : BaseFragment(), HomeContract.View {
                     tv_header_title.text = ""
                 } else {
                     if (mHomeAdapter?.mData!!.size > 1) {
-                        toolbar.setBackgroundColor(getColor(R.color.color_title_bg))
-                        iv_search.setImageResource(R.mipmap.ic_action_search_black)
-                        val itemList = mHomeAdapter!!.mData
-                        val item = itemList[currentVisibleItemPosition + mHomeAdapter!!.bannerItemSize - 1]
-                        if (item.type == "textHeader") {
-                            tv_header_title.text = item.data?.text
-                        } else {
-                            tv_header_title.text = simpleDateFormat.format(item.data?.date)
-                        }
+//                        toolbar.setBackgroundColor(getColor(R.color.color_title_bg))
+//                        iv_search.setImageResource(R.mipmap.ic_action_search_black)
+//                        val itemList = mHomeAdapter!!.mData
+//                        val item = itemList[currentVisibleItemPosition + mHomeAdapter!!.bannerItemSize - 1]
+//                        if (item.type == "textHeader") {
+//                            tv_header_title.text = item.data?.text
+//                        } else {
+//                            tv_header_title.text = simpleDateFormat.format(item.data?.date)
+//                        }
                     }
                 }
 
@@ -149,7 +143,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     }
 
     override fun lazyLoad() {
-        mPresenter.requestHomeData(num)
+        mPresenter.requestHomeData()
     }
 
 
@@ -173,22 +167,19 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     /**
      * 设置首页数据
      */
-    override fun setHomeData(homeBean: HomeBean) {
+    override fun setHomeData(homeBean: HomeDataBean) {
         mLayoutStatusView?.showContent()
         Logger.d(homeBean)
 
         // Adapter
-        mHomeAdapter = HomeAdapter(activity, homeBean.issueList[0].itemList)
-        //设置 banner 大小
-        mHomeAdapter?.setBannerSize(homeBean.issueList[0].count)
-
+        mHomeAdapter = HomeAdapter(activity, homeBean.bannerData ?: ArrayList(), homeBean.data)
         mRecyclerView.adapter = mHomeAdapter
         mRecyclerView.layoutManager = linearLayoutManager
         mRecyclerView.itemAnimator = DefaultItemAnimator()
 
     }
 
-    override fun setMoreData(itemList: ArrayList<HomeBean.Issue.Item>) {
+    override fun setMoreData(itemList: List<News>) {
         loadingMore = false
         mHomeAdapter?.addItemData(itemList)
     }
