@@ -9,11 +9,14 @@ import com.a91power.a91pos.common.toReadedStr
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.glide.GlideApp
+import com.iterduo.Finance.ITerduoFinance.mvp.model.base.IFooterItem
+import com.iterduo.Finance.ITerduoFinance.mvp.model.base.IMultiItem
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.BannerItem
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBanner
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.News
 import com.iterduo.Finance.ITerduoFinance.utils.DateUtils
 import com.iterduo.Finance.ITerduoFinance.view.recyclerview.ViewHolder
-import com.iterduo.Finance.ITerduoFinance.view.recyclerview.adapter.CommonHeaderMultiItemAdapter
+import com.iterduo.Finance.ITerduoFinance.view.recyclerview.adapter.CommonMultiItemAdapter
 import io.reactivex.Observable
 
 /**
@@ -21,9 +24,8 @@ import io.reactivex.Observable
  * desc: 首页精选的 Adapter
  */
 
-class HomeAdapter(context: Context, val bannerList: List<BannerItem>, data: ArrayList<News>)
-    : CommonHeaderMultiItemAdapter<News>(context, data, -1) {
-
+class HomeAdapter(context: Context, val bannerList: ArrayList<HomeBanner>, data: ArrayList<News>)
+    : CommonMultiItemAdapter<HomeBanner, News, IFooterItem>(context, bannerList, data, null, -1) {
 
     /**
      * 添加更多数据
@@ -33,15 +35,16 @@ class HomeAdapter(context: Context, val bannerList: List<BannerItem>, data: Arra
         notifyDataSetChanged()
     }
 
-    override fun getHeaderItemLayout(): Int = R.layout.item_home_banner
     override fun getMultiItemLayout(viewType: Int): Int {
         return when (viewType) {
-            CommonHeaderMultiItemAdapter.ITEM_TYPE_CONTENT -> R.layout.item_home_content
+            IMultiItem.ITEM_TYPE_CONTENT -> R.layout.item_home_content
             else -> R.layout.item_home_content
         }
     }
 
-    override fun getHeaderCount(): Int = 1
+    override fun getHeaderItemLayout(): Int = R.layout.item_home_banner
+    override fun getFooterItemLayout(): Int = -1
+    override fun bindFooterData(holder: ViewHolder, f: IFooterItem, headerPosition: Int) {}
 
     /**
      * 绑定布局
@@ -50,7 +53,8 @@ class HomeAdapter(context: Context, val bannerList: List<BannerItem>, data: Arra
         setNewsItem(holder, data)
     }
 
-    override fun bindHeaderData(holder: ViewHolder, headerPosition: Int) {
+    override fun bindHeaderData(holder: ViewHolder, header: HomeBanner, headerPosition: Int) {
+        val bannerList = header.bannerList
         val bannerFeedList = ArrayList<String>()
         val bannerTitleList = ArrayList<String>()
         //取出banner 显示的 img 和 Title

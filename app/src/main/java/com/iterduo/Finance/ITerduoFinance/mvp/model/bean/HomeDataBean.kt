@@ -1,7 +1,8 @@
 package com.iterduo.Finance.ITerduoFinance.mvp.model.bean
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
-import com.iterduo.Finance.ITerduoFinance.view.recyclerview.adapter.CommonHeaderMultiItemAdapter
+import com.iterduo.Finance.ITerduoFinance.mvp.model.base.IMultiItem
+import com.iterduo.Finance.ITerduoFinance.view.recyclerview.adapter.CommonMultiItemAdapter
 
 /**
  * Created by WongKi on 2018/6/7.
@@ -10,7 +11,7 @@ import com.iterduo.Finance.ITerduoFinance.view.recyclerview.adapter.CommonHeader
 data class HomeDataBean(
         val msg: String,
         val data: ArrayList<News>,
-        var bannerData: ArrayList<BannerItem>?,
+        var bannerData: HomeBanner,
         val error: Int
 )
 
@@ -24,6 +25,6 @@ data class News(
         val small_url: String,
         val news_id: Int,
         val jump_url: String
-) : MultiItemEntity {
-    override fun getItemType(): Int = CommonHeaderMultiItemAdapter.ITEM_TYPE_CONTENT
+) : IMultiItem {
+    override fun getItemType(): Int = IMultiItem.ITEM_TYPE_CONTENT
 }

@@ -5,6 +5,7 @@ import com.iterduo.Finance.ITerduoFinance.mvp.contract.HomeContract
 import com.iterduo.Finance.ITerduoFinance.mvp.contract.HomeOldContract
 import com.iterduo.Finance.ITerduoFinance.mvp.model.HomeModel
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.BannerItem
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBanner
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeDataBean
 import com.iterduo.Finance.ITerduoFinance.net.exception.ExceptionHandle
@@ -17,10 +18,10 @@ import com.iterduo.Finance.ITerduoFinance.net.exception.ExceptionHandle
 
 class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter {
 
-    private var bannerList:  ArrayList<BannerItem>? = null
+    private var bannerList: ArrayList<BannerItem>? = null
 
     private var page = 1
-    private var pageSize=15
+    private var pageSize = 15
 
     private val homeModel: HomeModel by lazy {
 
@@ -42,14 +43,14 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
                     bannerList = bannerBean.data
 
                     //根据 nextPageUrl 请求下一页数据
-                    homeModel.loadMoreData(page,pageSize)
+                    homeModel.loadMoreData(page, pageSize)
                 })
 
-                .subscribe({ homeData->
+                .subscribe({ homeData ->
                     page++
                     mRootView?.apply {
                         dismissLoading()
-                        homeData.bannerData = this@HomePresenter.bannerList
+                        homeData.bannerData = HomeBanner(this@HomePresenter.bannerList ?: ArrayList())
                         setHomeData(homeData!!)
                     }
 
@@ -59,7 +60,7 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
 //                        if (bannerList!=null) {
 //                            HomeDataBean("",ArrayList(),bannerList, -1)
 //                        }
-                        showError(ExceptionHandle.handleException(t),ExceptionHandle.errorCode)
+                        showError(ExceptionHandle.handleException(t), ExceptionHandle.errorCode)
                     }
                 })
 
@@ -72,24 +73,23 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
      */
 
     override fun loadMoreData() {
-         val disposable =
-             homeModel.loadMoreData(page,pageSize)
-                     .subscribe({ homeBean->
-                         page++
-                         mRootView?.apply {
-                             setMoreData(homeBean.data)
-                         }
+        val disposable =
+                homeModel.loadMoreData(page, pageSize)
+                        .subscribe({ homeBean ->
+                            page++
+                            mRootView?.apply {
+                                setMoreData(homeBean.data)
+                            }
 
-                     },{ t ->
-                         mRootView?.apply {
-                             showError(ExceptionHandle.handleException(t),ExceptionHandle.errorCode)
-                         }
-                     })
+                        }, { t ->
+                            mRootView?.apply {
+                                showError(ExceptionHandle.handleException(t), ExceptionHandle.errorCode)
+                            }
+                        })
         if (disposable != null) {
             addSubscription(disposable)
         }
     }
-
 
 
 }

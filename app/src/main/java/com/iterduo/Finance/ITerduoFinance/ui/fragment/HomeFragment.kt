@@ -172,7 +172,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         Logger.d(homeBean)
 
         // Adapter
-        mHomeAdapter = HomeAdapter(activity, homeBean.bannerData ?: ArrayList(), homeBean.data)
+        mHomeAdapter = HomeAdapter(activity, arrayListOf(homeBean.bannerData), homeBean.data)
         mRecyclerView.adapter = mHomeAdapter
         mRecyclerView.layoutManager = linearLayoutManager
         mRecyclerView.itemAnimator = DefaultItemAnimator()

@@ -1,5 +1,7 @@
 package com.iterduo.Finance.ITerduoFinance.mvp.model.bean
 
+import com.iterduo.Finance.ITerduoFinance.mvp.model.base.IHeaderItem
+
 /**
  * Created by WongKi on 2018/6/7.
  */
@@ -15,4 +17,4 @@ data class BannerItem(
     val jump_url: String,
     val order: Int,
     val banner_id: Int
-)
+):IHeaderItem
