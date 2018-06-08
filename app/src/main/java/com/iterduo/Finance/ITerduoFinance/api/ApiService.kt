@@ -21,6 +21,10 @@ interface ApiService{
     fun getHomeNewsList(@Query("index") page: Int,@Query("size") pageSize: Int): Observable<HomeDataBean>
 
 
+    @GET("v1/fast_news/get_fast_news_list")
+    fun getExpressNewsList(@Query("index") page: Int, @Query("size") pageSize: Int): Observable<ExpressNews>
+
+
     /**
      * 首页精选
      */

@@ -2,6 +2,8 @@ package com.iterduo.Finance.ITerduoFinance.mvp.contract
 
 import com.iterduo.Finance.ITerduoFinance.base.IBaseView
 import com.iterduo.Finance.ITerduoFinance.base.IPresenter
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.ExpressNews
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.ExpressNewsItem
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
 
 /**
@@ -12,16 +14,11 @@ import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
 interface ExpressNewsContract {
 
     interface View : IBaseView {
-
-        /**
-         * 设置第一次请求的数据
-         */
-        fun setHomeData(homeBean: HomeBean)
-
+        fun setData(itemList:ArrayList<ExpressNewsItem>)
         /**
          * 设置加载更多的数据
          */
-        fun setMoreData(itemList:ArrayList<HomeBean.Issue.Item>)
+        fun setMoreData(itemList:ArrayList<ExpressNewsItem>)
 
         /**
          * 显示错误信息
@@ -36,7 +33,7 @@ interface ExpressNewsContract {
         /**
          * 获取首页精选数据
          */
-        fun requestHomeData(num: Int)
+        fun requestData()
 
         /**
          * 加载更多数据

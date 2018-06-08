@@ -1,8 +1,6 @@
 package com.iterduo.Finance.ITerduoFinance.mvp.model
 
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.BannerBean
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeDataBean
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.*
 import com.iterduo.Finance.ITerduoFinance.net.RetrofitManager
 import com.iterduo.Finance.ITerduoFinance.rx.scheduler.SchedulerUtils
 import io.reactivex.Observable
@@ -22,6 +20,7 @@ class HomeModel{
                 .compose(SchedulerUtils.ioToMain())
     }
 
+
     /**
      * 获取Banner 数据
      */
@@ -36,6 +35,14 @@ class HomeModel{
     fun loadMoreData(page:Int,pageSize:Int):Observable<HomeDataBean>{
 
         return RetrofitManager.service.getHomeNewsList(page,pageSize)
+                .compose(SchedulerUtils.ioToMain())
+    }
+    /**
+     * 快讯列表
+     */
+    fun getExpressNewsList(page:Int,pageSize:Int):Observable<ExpressNews>{
+
+        return RetrofitManager.service.getExpressNewsList(page,pageSize)
                 .compose(SchedulerUtils.ioToMain())
     }
     /**

@@ -7,12 +7,12 @@ import android.support.v7.widget.RecyclerView
 import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.base.BaseFragment
 import com.iterduo.Finance.ITerduoFinance.mvp.contract.ExpressNewsContract
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.ExpressNewsItem
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
 import com.iterduo.Finance.ITerduoFinance.mvp.presenter.ExpressNewsPresenter
 import com.iterduo.Finance.ITerduoFinance.net.exception.ErrorStatus
 import com.iterduo.Finance.ITerduoFinance.showToast
 import com.iterduo.Finance.ITerduoFinance.ui.adapter.ExpressNewsAdapter
-import com.iterduo.Finance.ITerduoFinance.ui.adapter.HomeAdapter
 import com.iterduo.Finance.ITerduoFinance.utils.StatusBarUtil
 import com.orhanobut.logger.Logger
 import com.scwang.smartrefresh.header.MaterialHeader
@@ -73,7 +73,7 @@ class ExpressNewsFragment : BaseFragment() , ExpressNewsContract.View {
         mRefreshLayout.setEnableHeaderTranslationContent(true)
         mRefreshLayout.setOnRefreshListener {
             isRefresh = true
-            mPresenter.requestHomeData(num)
+            mPresenter.requestData()
         }
         mMaterialHeader = mRefreshLayout.refreshHeader as MaterialHeader?
         //打开下拉刷新区域块背景:
@@ -110,7 +110,7 @@ class ExpressNewsFragment : BaseFragment() , ExpressNewsContract.View {
 
 
     override fun lazyLoad() {
-        mPresenter.requestHomeData(num)
+        mPresenter.requestData()
     }
 
 
@@ -134,14 +134,11 @@ class ExpressNewsFragment : BaseFragment() , ExpressNewsContract.View {
     /**
      * 设置首页数据
      */
-    override fun setHomeData(homeBean: HomeBean) {
+    override fun setData(itemList:ArrayList<ExpressNewsItem>) {
         mLayoutStatusView?.showContent()
-        Logger.d(homeBean)
 
         // Adapter
-        mExpressNewsAdapter = ExpressNewsAdapter(activity, homeBean.issueList[0].itemList)
-        //设置 banner 大小
-        mExpressNewsAdapter?.setBannerSize(homeBean.issueList[0].count)
+        mExpressNewsAdapter = ExpressNewsAdapter(activity, itemList)
 
         mRecyclerView.adapter = mExpressNewsAdapter
         mRecyclerView.layoutManager = linearLayoutManager
@@ -149,7 +146,7 @@ class ExpressNewsFragment : BaseFragment() , ExpressNewsContract.View {
 
     }
 
-    override fun setMoreData(itemList: ArrayList<HomeBean.Issue.Item>) {
+    override fun setMoreData(itemList:ArrayList<ExpressNewsItem>) {
         loadingMore = false
         mExpressNewsAdapter?.addItemData(itemList)
     }
