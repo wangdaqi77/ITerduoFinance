@@ -14,6 +14,7 @@ import com.iterduo.Finance.ITerduoFinance.mvp.model.base.IMultiItem
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.BannerItem
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBanner
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.News
+import com.iterduo.Finance.ITerduoFinance.ui.activity.NewsDetailActivity
 import com.iterduo.Finance.ITerduoFinance.utils.DateUtils
 import com.iterduo.Finance.ITerduoFinance.view.recyclerview.ViewHolder
 import com.iterduo.Finance.ITerduoFinance.view.recyclerview.adapter.CommonMultiItemAdapter
@@ -83,7 +84,8 @@ class HomeAdapter(context: Context, val bannerList: ArrayList<HomeBanner>, data:
         }
         //没有使用到的参数在 kotlin 中用"_"代替
         holder.getView<BGABanner>(R.id.banner).setDelegate { _, imageView, _, i ->
-            goToNewsDetail(mContext as Activity, imageView, bannerList[i].jump_url)
+            NewsDetailActivity.start(holder.itemView.context, bannerList[i].jump_url)
+            //goToNewsDetail(mContext as Activity, imageView, bannerList[i].jump_url)
         }
     }
 
@@ -125,7 +127,8 @@ class HomeAdapter(context: Context, val bannerList: ArrayList<HomeBanner>, data:
         holder.setText(R.id.tv_read, "${readedStr}人阅读")
 
         holder.setOnItemClickListener(listener = View.OnClickListener {
-            goToNewsDetail(mContext as Activity, holder.getView(R.id.iv_cover_feed), itemData.jump_url)
+            NewsDetailActivity.start(holder.itemView.context, itemData.jump_url)
+            //goToNewsDetail(mContext as Activity, holder.getView(R.id.iv_cover_feed), itemData.jump_url)
         })
 
 

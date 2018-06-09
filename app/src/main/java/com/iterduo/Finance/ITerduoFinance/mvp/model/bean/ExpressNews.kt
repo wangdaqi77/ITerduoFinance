@@ -15,7 +15,7 @@ data class ExpressNewsItem(
     val subtitle: String,
     val pub_time: Int,
     val author: String,
-    val fast_id: Int,
+    val fast_id: String,
     val content: String,
     val desc: String
 )

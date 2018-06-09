@@ -14,6 +14,7 @@ import com.iterduo.Finance.ITerduoFinance.Constants
 import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.ExpressNewsItem
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
+import com.iterduo.Finance.ITerduoFinance.ui.activity.NewsDetailActivity
 import com.iterduo.Finance.ITerduoFinance.ui.activity.VideoDetailActivity
 import com.iterduo.Finance.ITerduoFinance.utils.DateUtils
 import com.iterduo.Finance.ITerduoFinance.view.recyclerview.ViewHolder
@@ -80,6 +81,7 @@ class ExpressNewsAdapter(context: Context, data: ArrayList<ExpressNewsItem>)
         holder.setText(R.id.tv_author_name, author)
 
         holder.setOnItemClickListener(listener = View.OnClickListener {
+            NewsDetailActivity.start(holder.itemView.context, itemData.fast_id)
             //goToVideoPlayer(mContext as Activity, holder.getView(R.id.iv_cover_feed), item)
         })
         holder.getView<TextView>(R.id.tv_action_share).setOnClickListener {
