@@ -15,6 +15,7 @@ import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.ExpressNewsItem
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
 import com.iterduo.Finance.ITerduoFinance.ui.activity.NewsDetailActivity
+import com.iterduo.Finance.ITerduoFinance.ui.activity.ShareNewsDetailActivity
 import com.iterduo.Finance.ITerduoFinance.ui.activity.VideoDetailActivity
 import com.iterduo.Finance.ITerduoFinance.utils.DateUtils
 import com.iterduo.Finance.ITerduoFinance.view.recyclerview.ViewHolder
@@ -86,7 +87,8 @@ class ExpressNewsAdapter(context: Context, data: ArrayList<ExpressNewsItem>)
         })
         holder.getView<TextView>(R.id.tv_action_share).setOnClickListener {
             // 分享
-            Toast.makeText(holder.itemView.context, "分享", Toast.LENGTH_LONG).show()
+            //Toast.makeText(holder.itemView.context, "分享", Toast.LENGTH_LONG).show()
+            ShareNewsDetailActivity.start(holder.itemView.context as Activity, content)
         }
 
     }

@@ -14,6 +14,7 @@ object DateUtils {
     const val P2 = "yyyy-MM-dd HH:mm"
     const val P3 = "yyyy-MM-dd"
     const val P4 = "MM-dd"
+    const val P5 = "yyyy-MM-dd HH:mm:ss"
 
 
     /**

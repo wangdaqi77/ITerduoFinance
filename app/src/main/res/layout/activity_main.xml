@@ -35,7 +35,7 @@
         app:tl_iconWidth="23dp"
         app:tl_indicator_color="@color/colorPrimary"
         app:tl_indicator_height="0dp"
-        app:tl_textSelectColor="@color/color_black"
+        app:tl_textSelectColor="@color/main_tab_sel"
         app:tl_textUnselectColor="@color/color_gray"
         app:tl_textsize="10sp"
         app:tl_underline_color="#DDDDDD"

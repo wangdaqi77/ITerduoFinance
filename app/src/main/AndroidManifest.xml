@@ -27,6 +27,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
+        <provider
+            android:name=".utils.FileProvide"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
 
         <activity
             android:name=".ui.activity.SplashActivity"
@@ -79,6 +88,10 @@
             android:name=".ui.activity.WatchHistoryActivity"
             android:screenOrientation="portrait" />
 
+        <!-- 分享 -->
+        <activity
+            android:name=".ui.activity.ShareNewsDetailActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:drawablePadding="10dp"
-                android:drawableStart="@mipmap/ic_action_share"
+                android:drawableStart="@drawable/list_icon_share"
                 android:gravity="center_vertical"
                 android:text="@string/share"
                 android:textColor="#9EA4AE"

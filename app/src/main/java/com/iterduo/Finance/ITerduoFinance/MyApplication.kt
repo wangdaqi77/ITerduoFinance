@@ -1,10 +1,15 @@
 package com.iterduo.Finance.ITerduoFinance
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlarmManager
 import android.app.Application
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import com.iterduo.Finance.ITerduoFinance.ui.activity.MainActivity
 import com.iterduo.Finance.ITerduoFinance.utils.DisplayManager
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -34,6 +39,21 @@ class MyApplication : Application(){
         fun getRefWatcher(context: Context): RefWatcher? {
             val myApplication = context.applicationContext as MyApplication
             return myApplication.refWatcher
+        }
+
+
+        @SuppressLint("WrongConstant")
+        fun reStartApp() {
+            val intent = Intent()
+            intent.setClassName(context.getPackageName(), MainActivity::class.java.name)
+            val restartIntent = PendingIntent.getActivity(context, 0,
+                    intent, Intent.FLAG_ACTIVITY_NEW_TASK)
+            val mgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 300,
+                    restartIntent)
+            // MyApp.stackInstance().exitAll()
+            android.os.Process.killProcess(android.os.Process.myPid())
+            System.exit(0)
         }
 
     }

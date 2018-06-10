@@ -45,4 +45,6 @@
 
     <!--耳朵财经-->
     <string name="app_name_">耳朵财经</string>
+    <string name="share_download_tip">扫描下载【耳朵财经】APP</string>
+    <string name="share_download_tip1">分享给你不一样的区块链声音</string>
 </resources>

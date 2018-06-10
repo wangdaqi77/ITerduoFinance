@@ -55,6 +55,10 @@
 
     <color name="color_item_content_text">#666666</color>
 
+    <!--耳朵财经-->
+    <color name="share_pager_text">#101D37</color>
+    <color name="main_tab_sel">#3072F6</color>
+
 
 
 
