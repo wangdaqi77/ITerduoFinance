@@ -9,10 +9,10 @@ apply plugin: 'kotlin-kapt'  //kapt3插件
 android {
     signingConfigs {
         config {
-            keyAlias 'ktmp'
-            keyPassword 'ktmp123456'
-            storeFile file('../ktmp.jks')
-            storePassword 'ktmp123456'
+            keyAlias 'iterduo'
+            keyPassword 'iterduo123'
+            storeFile file('../release.jks')
+            storePassword 'iterduo123'
         }
     }
     compileSdkVersion rootProject.ext.android.compileSdkVersion
