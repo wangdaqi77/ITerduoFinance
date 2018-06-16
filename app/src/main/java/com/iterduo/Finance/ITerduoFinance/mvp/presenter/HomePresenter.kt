@@ -78,7 +78,7 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
                         .subscribe({ homeBean ->
                             page++
                             mRootView?.apply {
-                                setMoreData(homeBean.data)
+                                setMoreData(homeBean.data.news_list)
                             }
 
                         }, { t ->

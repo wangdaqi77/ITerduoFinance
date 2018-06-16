@@ -2,9 +2,7 @@ package com.iterduo.Finance.ITerduoFinance.mvp.presenter
 
 import com.iterduo.Finance.ITerduoFinance.base.BasePresenter
 import com.iterduo.Finance.ITerduoFinance.mvp.contract.ExpressNewsContract
-import com.iterduo.Finance.ITerduoFinance.mvp.contract.HomeContract
 import com.iterduo.Finance.ITerduoFinance.mvp.model.HomeModel
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
 import com.iterduo.Finance.ITerduoFinance.net.exception.ExceptionHandle
 
 /**
@@ -38,7 +36,7 @@ class ExpressNewsPresenter : BasePresenter<ExpressNewsContract.View>(), ExpressN
                         dismissLoading()
                         page++
 
-                        setData(expressNews.data)
+                        setData(expressNews.data.fnews_list)
 
                     }
 
@@ -64,7 +62,7 @@ class ExpressNewsPresenter : BasePresenter<ExpressNewsContract.View>(), ExpressN
                             mRootView?.apply {
                                 dismissLoading()
                                 page++
-                                setData(expressNews.data)
+                                setData(expressNews.data.fnews_list)
                             }
 
                         }, { t ->

@@ -1,8 +1,6 @@
 package com.iterduo.Finance.ITerduoFinance.mvp.model.bean
 
-import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.iterduo.Finance.ITerduoFinance.mvp.model.base.IMultiItem
-import com.iterduo.Finance.ITerduoFinance.view.recyclerview.adapter.CommonMultiItemAdapter
 
 /**
  * Created by WongKi on 2018/6/7.
@@ -10,12 +8,18 @@ import com.iterduo.Finance.ITerduoFinance.view.recyclerview.adapter.CommonMultiI
 
 data class HomeDataBean(
         val msg: String,
-        val data: ArrayList<News>,
+        val data: NewsList,
         var bannerData: HomeBanner,
         val error: Int
 )
 
-data class News(
+class NewsList {
+    var page: Int? = null
+    var total_count: Int? = null
+    val news_list = ArrayList<NewsItem>()
+}
+
+data class NewsItem(
         val title: String,
         val subtitle: String,
         val desc: String,

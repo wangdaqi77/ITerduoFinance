@@ -2,9 +2,8 @@ package com.iterduo.Finance.ITerduoFinance.mvp.contract
 
 import com.iterduo.Finance.ITerduoFinance.base.IBaseView
 import com.iterduo.Finance.ITerduoFinance.base.IPresenter
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeDataBean
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.News
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.NewsItem
 
 /**
  * Created by wq on 2018/6.
@@ -23,7 +22,7 @@ interface HomeContract {
         /**
          * 设置加载更多的数据
          */
-        fun setMoreData(itemList:List<News>)
+        fun setMoreData(itemList:List<NewsItem>)
 
         /**
          * 显示错误信息

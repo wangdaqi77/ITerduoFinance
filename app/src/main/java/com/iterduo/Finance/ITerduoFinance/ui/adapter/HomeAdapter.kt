@@ -11,9 +11,8 @@ import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.glide.GlideApp
 import com.iterduo.Finance.ITerduoFinance.mvp.model.base.IFooterItem
 import com.iterduo.Finance.ITerduoFinance.mvp.model.base.IMultiItem
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.BannerItem
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBanner
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.News
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.NewsItem
 import com.iterduo.Finance.ITerduoFinance.ui.activity.NewsDetailActivity
 import com.iterduo.Finance.ITerduoFinance.utils.DateUtils
 import com.iterduo.Finance.ITerduoFinance.view.recyclerview.ViewHolder
@@ -25,13 +24,13 @@ import io.reactivex.Observable
  * desc: 首页精选的 Adapter
  */
 
-class HomeAdapter(context: Context, val bannerList: ArrayList<HomeBanner>, data: ArrayList<News>)
-    : CommonMultiItemAdapter<HomeBanner, News, IFooterItem>(context, bannerList, data, null, -1) {
+class HomeAdapter(context: Context, val bannerList: ArrayList<HomeBanner>, data: ArrayList<NewsItem>)
+    : CommonMultiItemAdapter<HomeBanner, NewsItem, IFooterItem>(context, bannerList, data, null, -1) {
 
     /**
      * 添加更多数据
      */
-    fun addItemData(itemList: List<News>) {
+    fun addItemData(itemList: List<NewsItem>) {
         this.mData.addAll(itemList)
         notifyDataSetChanged()
     }
@@ -50,7 +49,7 @@ class HomeAdapter(context: Context, val bannerList: ArrayList<HomeBanner>, data:
     /**
      * 绑定布局
      */
-    override fun bindData(holder: ViewHolder, data: News, position: Int) {
+    override fun bindData(holder: ViewHolder, data: NewsItem, position: Int) {
         setNewsItem(holder, data)
     }
 
@@ -93,7 +92,7 @@ class HomeAdapter(context: Context, val bannerList: ArrayList<HomeBanner>, data:
     /**
      * 加载 content item
      */
-    private fun setNewsItem(holder: ViewHolder, itemData: News) {
+    private fun setNewsItem(holder: ViewHolder, itemData: NewsItem) {
         val defPlaceHolder = R.drawable.placeholder_banner
         val title = itemData.title ?: ""
         val author = itemData.author ?: ""

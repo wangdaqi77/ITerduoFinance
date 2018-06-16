@@ -6,10 +6,14 @@ package com.iterduo.Finance.ITerduoFinance.mvp.model.bean
 
 data class ExpressNews(
         val msg: String,
-        val data: ArrayList<ExpressNewsItem>,
+        val data: ExpressNewsList,
         val error: Int
 )
-
+class ExpressNewsList {
+    var page: Int? = null
+    var total_count: Int? = null
+    val fnews_list = ArrayList<ExpressNewsItem>()
+}
 data class ExpressNewsItem(
     val title: String,
     val subtitle: String,

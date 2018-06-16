@@ -11,7 +11,7 @@ import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.base.BaseFragment
 import com.iterduo.Finance.ITerduoFinance.mvp.contract.HomeContract
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeDataBean
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.News
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.NewsItem
 import com.iterduo.Finance.ITerduoFinance.mvp.presenter.HomePresenter
 import com.iterduo.Finance.ITerduoFinance.net.exception.ErrorStatus
 import com.iterduo.Finance.ITerduoFinance.showToast
@@ -23,7 +23,6 @@ import com.scwang.smartrefresh.header.MaterialHeader
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 @Suppress("DEPRECATION")
 /**
@@ -172,14 +171,14 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         Logger.d(homeBean)
 
         // Adapter
-        mHomeAdapter = HomeAdapter(activity, arrayListOf(homeBean.bannerData), homeBean.data)
+        mHomeAdapter = HomeAdapter(activity, arrayListOf(homeBean.bannerData), homeBean.data.news_list)
         mRecyclerView.adapter = mHomeAdapter
         mRecyclerView.layoutManager = linearLayoutManager
         mRecyclerView.itemAnimator = DefaultItemAnimator()
 
     }
 
-    override fun setMoreData(itemList: List<News>) {
+    override fun setMoreData(itemList: List<NewsItem>) {
         loadingMore = false
         mHomeAdapter?.addItemData(itemList)
     }
