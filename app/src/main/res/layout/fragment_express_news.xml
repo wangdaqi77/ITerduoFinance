@@ -6,37 +6,45 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        app:contentInsetStart="0dp"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/color_title_bg">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <RelativeLayout
-            android:id="@+id/rel_toolbar"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/color_title_bg"
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap">
 
-            <TextView
-                android:id="@+id/tv_header_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="@string/hot_title"
-                android:textColor="@color/color_item_title_nor"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:text="标题栏" />
-
-            <View
-                android:layout_alignParentBottom="true"
+            <RelativeLayout
+                android:id="@+id/rel_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/division_line"
-                android:background="@color/color_light_black" />
-        </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_header_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/hot_title"
+                    android:textColor="@color/color_item_title_nor"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="标题栏" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/division_line"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/color_light_black" />
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/mRefreshLayout"
