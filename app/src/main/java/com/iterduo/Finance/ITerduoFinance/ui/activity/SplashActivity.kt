@@ -97,7 +97,7 @@ class SplashActivity : BaseActivity() {
                 .checkMutiPermission(object : PermissionCallback {
                     override fun onClose() {
                         Logger.i( "permission_onClose")
-                        showToast("用户关闭了权限")
+                        showToast("上帝您关闭了权限")
                     }
 
                     override fun onFinish() {

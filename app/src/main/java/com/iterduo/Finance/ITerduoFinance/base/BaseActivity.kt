@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import com.classic.common.MultipleStatusView
 import com.iterduo.Finance.ITerduoFinance.MyApplication
+import com.shuyu.gsyvideoplayer.utils.Debuger
 
 
 /**
@@ -79,6 +81,10 @@ abstract class BaseActivity : AppCompatActivity() {
     fun closeKeyBord(mEditText: EditText, mContext: Context) {
         val imm = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(mEditText.windowToken, 0)
+    }
+
+    fun toast(msg: String?) {
+        Toast.makeText(this, msg ?: "", Toast.LENGTH_LONG).show()
     }
 
 

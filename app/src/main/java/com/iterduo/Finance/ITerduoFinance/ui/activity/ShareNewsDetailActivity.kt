@@ -15,9 +15,14 @@ import com.iterduo.Finance.ITerduoFinance.showToast
 import com.iterduo.Finance.ITerduoFinance.utils.FileManager
 import com.iterduo.Finance.ITerduoFinance.utils.StatusBarUtil
 import com.iterduo.Finance.ITerduoFinance.view.ShareButtonsLayout
+import com.umeng.socialize.UMShareAPI
 import kotlinx.android.synthetic.main.share_layout.*
 import java.io.File
 import java.io.FileOutputStream
+import com.umeng.socialize.ShareAction
+import com.umeng.socialize.UMShareListener
+import com.umeng.socialize.bean.SHARE_MEDIA
+import com.umeng.socialize.media.UMImage
 
 
 /**
@@ -26,11 +31,14 @@ import java.io.FileOutputStream
 class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOnClickListener {
     override fun onClick(view: View, type: ShareType) {
         when (type) {
-            ShareType.WECHAT -> {
+            ShareType.WEIXIN -> {
+                shareWeiXin()
             }
-            ShareType.FRIENDS -> {
+            ShareType.WEIXIN_CIRCLE -> {
+                shareWeiXinCircle()
             }
             ShareType.QQ -> {
+                shareQQ()
             }
             ShareType.DOWNLOAD -> {
                 saveBitmap2File(bitmap)
@@ -40,6 +48,69 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
             }
         }
     }
+
+
+    /*创建分享图片*/
+    private fun createUMImage(): UMImage {
+        return UMImage(this, bitmap)
+    }
+
+    /*压缩分享图片*/
+    private fun compressImage(image: UMImage): UMImage =
+            image.apply { compressStyle = UMImage.CompressStyle.SCALE }
+
+    var mCallBack = object : UMShareListener {
+        override fun onResult(p0: SHARE_MEDIA?) {
+            toast("分享成功")
+            finish()
+        }
+
+        override fun onCancel(p0: SHARE_MEDIA?) {
+            toast("取消")
+        }
+
+        override fun onError(p0: SHARE_MEDIA?, t: Throwable?) {
+            toast("失败：${t?.message}")
+        }
+
+        override fun onStart(p0: SHARE_MEDIA?) {
+        }
+
+    }
+
+    /*分享微信*/
+    private fun shareWeiXin() {
+        val umImage = compressImage(createUMImage())
+        ShareAction(this)
+                .setPlatform(SHARE_MEDIA.WEIXIN)
+                //.withText("hello")
+                .withMedia(umImage)
+                .setCallback(mCallBack)
+                .share()
+    }
+
+    /*分享到朋友圈*/
+    private fun shareWeiXinCircle() {
+        val umImage = compressImage(createUMImage())
+        ShareAction(this)
+                .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                //.withText("hello")
+                .withMedia(umImage)
+                .setCallback(mCallBack)
+                .share()
+    }
+
+    /*分享到QQ*/
+    private fun shareQQ() {
+        val umImage = compressImage(createUMImage())
+        ShareAction(this)
+                .setPlatform(SHARE_MEDIA.QQ)
+                //.withText("hello")
+                .withMedia(umImage)
+                .setCallback(mCallBack)
+                .share()
+    }
+
 
     private fun saveBitmap2File(bitmap: Bitmap) {
         try {
@@ -57,7 +128,7 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
 
     override fun layoutId(): Int = R.layout.share_layout
 
-    private var mContent : String? = null
+    private var mContent: String? = null
     override fun getExtData() {
         mContent = intent.getStringExtra(SHARE_CONTENT)
     }
@@ -106,7 +177,7 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
         //        c.drawColor(Color.WHITE);
         v.layout(0, 0, w, h)
         share_content_root.run {
-            if (height<nsv.height) {
+            if (height < nsv.height) {
                 share_tv_content.minHeight = nsv.height - height + share_tv_content.height
             }
         }
@@ -118,6 +189,11 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
     override fun loadData() {
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
     companion object {
         private const val SHARE_CONTENT = "share_content"
         fun start(activity: Activity, content: String) {
@@ -127,3 +203,5 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
         }
     }
 }
+
+

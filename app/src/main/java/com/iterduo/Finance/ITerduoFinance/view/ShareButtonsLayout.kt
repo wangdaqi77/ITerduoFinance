@@ -4,11 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.common.ShareType
-import kotlinx.android.synthetic.main.share_layout.*
 
 /**
  * Created by WongKi on 2018/6/10.
@@ -27,12 +25,12 @@ class ShareButtonsLayout : FrameLayout {
     private fun initView() {
         findViewById<View>(R.id.share_action_wechat).setOnClickListener { v ->
             shareButtonOnClickListener?.run {
-                onClick(v, ShareType.WECHAT)
+                onClick(v, ShareType.WEIXIN)
             }
         }
         findViewById<View>(R.id.share_action_friend).setOnClickListener { v ->
             shareButtonOnClickListener?.run {
-                onClick(v, ShareType.FRIENDS)
+                onClick(v, ShareType.WEIXIN_CIRCLE)
             }
         }
         findViewById<View>(R.id.share_action_qq).setOnClickListener { v ->
