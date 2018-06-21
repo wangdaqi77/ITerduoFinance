@@ -25,9 +25,6 @@ import java.util.*
 
 class NewsDetailActivity : BaseActivity() {
 
-    private var mOffset = 0
-    private var mScrollY = 0
-
     companion object {
         private const val EXT_URL = "ext_url"
         fun start(context: Context?, url: String?) {
@@ -56,37 +53,6 @@ class NewsDetailActivity : BaseActivity() {
         StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
 
-        refreshLayout.setOnMultiPurposeListener(object : SimpleMultiPurposeListener() {
-            override fun onHeaderPulling(header: RefreshHeader?, percent: Float, offset: Int, bottomHeight: Int, extendHeight: Int) {
-                mOffset = offset / 2
-                //parallax.translationY = (mOffset - mScrollY).toFloat()
-                toolbar.alpha = 1 - Math.min(percent, 1f)
-            }
-
-            override fun onHeaderReleasing(header: RefreshHeader?, percent: Float, offset: Int, bottomHeight: Int, extendHeight: Int) {
-                mOffset = offset / 2
-                //parallax.translationY = (mOffset - mScrollY).toFloat()
-                toolbar.alpha = 1 - Math.min(percent, 1f)
-            }
-        })
-        scrollView.setOnScrollChangeListener(object : NestedScrollView.OnScrollChangeListener {
-            private var lastScrollY = 0
-            private val h = DensityUtil.dp2px(170f)
-            private val color = ContextCompat.getColor(applicationContext, R.color.colorPrimary) and 0x00ffffff
-            override fun onScrollChange(v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
-                var tScrollY = scrollY
-                if (lastScrollY < h) {
-                    tScrollY = Math.min(h, tScrollY)
-                    mScrollY = if (tScrollY > h) h else tScrollY
-                    //buttonBarLayout.alpha = 1f * mScrollY / h
-                    toolbar.setBackgroundColor(255 * mScrollY / h shl 24 or color)
-                    //parallax.translationY = (mOffset - mScrollY).toFloat()
-                }
-                lastScrollY = tScrollY
-            }
-        })
-        //buttonBarLayout.alpha = 0f
-        toolbar.setBackgroundColor(0)
         //返回
         toolbar.setNavigationOnClickListener { finish() }
 
