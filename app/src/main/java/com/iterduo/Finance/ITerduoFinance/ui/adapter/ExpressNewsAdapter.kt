@@ -71,6 +71,7 @@ class ExpressNewsAdapter(context: Context, data: ArrayList<ExpressNewsItem>)
         val title = itemData.title
         val content = itemData.content
         val author = itemData.author
+        val downloadUrl = itemData.url
         val time = DateUtils.getNewsTime(itemData.pub_time)
 
 
@@ -88,7 +89,7 @@ class ExpressNewsAdapter(context: Context, data: ArrayList<ExpressNewsItem>)
         holder.getView<TextView>(R.id.tv_action_share).setOnClickListener {
             // 分享
             //Toast.makeText(holder.itemView.context, "分享", Toast.LENGTH_LONG).show()
-            ShareNewsDetailActivity.start(holder.itemView.context as Activity, content)
+            ShareNewsDetailActivity.start(holder.itemView.context as Activity, content, downloadUrl)
         }
 
     }

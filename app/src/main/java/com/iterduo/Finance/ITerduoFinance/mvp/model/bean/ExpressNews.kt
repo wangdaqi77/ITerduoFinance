@@ -21,5 +21,6 @@ data class ExpressNewsItem(
     val author: String,
     val fast_id: String,
     val content: String,
-    val desc: String
+    val desc: String,
+    val url: String//app下载地址
 )

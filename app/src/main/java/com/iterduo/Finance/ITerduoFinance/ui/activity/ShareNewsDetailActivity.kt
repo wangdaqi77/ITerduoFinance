@@ -3,6 +3,7 @@ package com.iterduo.Finance.ITerduoFinance.ui.activity
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.view.View
@@ -13,6 +14,7 @@ import com.iterduo.Finance.ITerduoFinance.common.Config
 import com.iterduo.Finance.ITerduoFinance.common.ShareType
 import com.iterduo.Finance.ITerduoFinance.showToast
 import com.iterduo.Finance.ITerduoFinance.utils.FileManager
+import com.iterduo.Finance.ITerduoFinance.utils.QrCodeUtil
 import com.iterduo.Finance.ITerduoFinance.utils.StatusBarUtil
 import com.iterduo.Finance.ITerduoFinance.view.ShareButtonsLayout
 import com.umeng.socialize.UMShareAPI
@@ -136,8 +138,17 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
     override fun initView() {
         StatusBarUtil.darkMode(this, Color.parseColor("#ffffff"), 0F)
         share_tv_content.text = mContent
+        showDownloadAPPQR(intent.getStringExtra(DOWNLOAD_URL))
         createBitmap()
         share_buttons.shareButtonOnClickListener = this@ShareNewsDetailActivity
+    }
+
+    private fun showDownloadAPPQR(downloadUrl: String) {
+        var createQRImage = QrCodeUtil.createQRImage(this, downloadUrl)
+        if (createQRImage != null) {
+            createQRImage = QrCodeUtil.addLogo(createQRImage, BitmapFactory.decodeResource(resources, R.drawable.ic_logo_qrcode))
+            iv_share_er_wei_ma.setImageBitmap(createQRImage)
+        }
     }
 
     lateinit var bitmap: Bitmap
@@ -196,9 +207,11 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
 
     companion object {
         private const val SHARE_CONTENT = "share_content"
-        fun start(activity: Activity, content: String) {
+        private const val DOWNLOAD_URL = "download_url"
+        fun start(activity: Activity, content: String, downloadUrl: String) {
             val intent = Intent(activity, ShareNewsDetailActivity::class.java)
             intent.putExtra(SHARE_CONTENT, content)
+            intent.putExtra(DOWNLOAD_URL, downloadUrl)
             activity.startActivity(intent)
         }
     }
