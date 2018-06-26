@@ -14,7 +14,7 @@
         android:layout_height="200dp"
         android:layout_marginEnd="@dimen/padding_common_d"
         android:scaleType="fitXY"
-        android:src="@drawable/placeholder_banner" />
+        android:src="@drawable/placeholder_image" />
 
     <TextView
         android:id="@+id/tv_title"

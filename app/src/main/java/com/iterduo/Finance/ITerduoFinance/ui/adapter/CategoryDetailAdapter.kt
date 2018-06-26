@@ -45,7 +45,7 @@ class CategoryDetailAdapter(context: Context, dataList: ArrayList<HomeBean.Issue
         // 加载封页图
         GlideApp.with(mContext)
                 .load(cover)
-                .apply(RequestOptions().placeholder(R.drawable.placeholder_banner))
+                .apply(RequestOptions().placeholder(R.drawable.placeholder_image))
                 .transition(DrawableTransitionOptions().crossFade())
                 .into(holder.getView(R.id.iv_image))
         holder.setText(R.id.tv_title, itemData?.title?:"")

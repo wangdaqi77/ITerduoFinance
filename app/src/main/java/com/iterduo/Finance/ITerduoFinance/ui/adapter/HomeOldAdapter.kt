@@ -110,7 +110,7 @@ class HomeOldAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
                                 GlideApp.with(mContext)
                                         .load(feedImageUrl)
                                         .transition(DrawableTransitionOptions().crossFade())
-                                        .placeholder(R.drawable.placeholder_banner)
+                                        .placeholder(R.drawable.placeholder_image)
                                         .into(imageView)
 
                             }
@@ -182,7 +182,7 @@ class HomeOldAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
         // 加载封页图
         GlideApp.with(mContext)
                 .load(cover)
-                .placeholder(R.drawable.placeholder_banner)
+                .placeholder(R.drawable.placeholder_image)
                 .transition(DrawableTransitionOptions().crossFade())
                 .into(holder.getView(R.id.iv_cover_feed))
 

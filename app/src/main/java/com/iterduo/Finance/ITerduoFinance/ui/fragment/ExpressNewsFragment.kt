@@ -37,9 +37,6 @@ class ExpressNewsFragment : BaseFragment() , ExpressNewsContract.View {
 
     private var mTitle: String? = null
 
-
-    private var num: Int = 1
-
     private var mExpressNewsAdapter: ExpressNewsAdapter? = null
 
     private var loadingMore = false

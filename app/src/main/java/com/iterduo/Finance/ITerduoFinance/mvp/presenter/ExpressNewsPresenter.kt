@@ -62,7 +62,7 @@ class ExpressNewsPresenter : BasePresenter<ExpressNewsContract.View>(), ExpressN
                             mRootView?.apply {
                                 dismissLoading()
                                 page++
-                                setData(expressNews.data.fnews_list)
+                                setMoreData(expressNews.data.fnews_list)
                             }
 
                         }, { t ->

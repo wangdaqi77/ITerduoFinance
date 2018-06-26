@@ -50,11 +50,11 @@
                     android:layout_height="70dp"
                     android:scaleType="fitXY" />
 
-<!--                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="25dp" />-->
+                <!--                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_marginStart="25dp"
+                                    android:layout_marginTop="25dp" />-->
 
                 <TextView
                     android:id="@+id/share_download_tip"
@@ -63,6 +63,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="12dp"
                     android:layout_toRightOf="@+id/iv_share_er_wei_ma"
+                    android:singleLine="true"
                     android:text="@string/share_download_tip"
                     android:textColor="@color/share_pager_text"
                     android:textSize="15dp" />
@@ -72,8 +73,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/share_download_tip"
                     android:layout_marginStart="12dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="4dp"
                     android:layout_toRightOf="@+id/iv_share_er_wei_ma"
+                    android:singleLine="true"
                     android:text="@string/share_download_tip1"
                     android:textColor="@color/share_pager_text"
                     android:textSize="12dp" />

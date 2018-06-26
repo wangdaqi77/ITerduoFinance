@@ -93,7 +93,6 @@ class HomeAdapter(context: Context, val bannerList: ArrayList<HomeBanner>, data:
      * 加载 content item
      */
     private fun setNewsItem(holder: ViewHolder, itemData: NewsItem) {
-        val defPlaceHolder = R.drawable.placeholder_banner
         val title = itemData.title ?: ""
         val author = itemData.author ?: ""
         val coverFoodUrl = itemData.small_url ?: ""
@@ -104,8 +103,8 @@ class HomeAdapter(context: Context, val bannerList: ArrayList<HomeBanner>, data:
 
         if (coverFoodUrl.isNullOrEmpty()) {
             GlideApp.with(mContext)
-                    .load(defPlaceHolder)
-                    .placeholder(defPlaceHolder).circleCrop()
+                    .load(R.drawable.placeholder_image)
+                    .placeholder(R.drawable.placeholder_image).circleCrop()
                     .transition(DrawableTransitionOptions().crossFade())
                     .into(holder.getView(R.id.iv_cover_feed))
 
@@ -113,7 +112,7 @@ class HomeAdapter(context: Context, val bannerList: ArrayList<HomeBanner>, data:
             // 加载封页图
             GlideApp.with(mContext)
                     .load(coverFoodUrl)
-                    .placeholder(R.drawable.placeholder_banner)
+                    .placeholder(R.drawable.placeholder_image)
                     .transition(DrawableTransitionOptions().crossFade())
                     .into(holder.getView(R.id.iv_cover_feed))
         }

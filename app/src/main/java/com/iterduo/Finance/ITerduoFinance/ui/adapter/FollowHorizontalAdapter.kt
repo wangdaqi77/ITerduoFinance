@@ -36,7 +36,7 @@ class FollowHorizontalAdapter(mContext: Context, categoryList: ArrayList<HomeBea
                 // 加载封页图
                 GlideApp.with(mContext)
                         .load(path)
-                        .placeholder(R.drawable.placeholder_banner)
+                        .placeholder(R.drawable.placeholder_image)
                         .transition(DrawableTransitionOptions().crossFade())
                         .into(holder.getView(R.id.iv_cover_feed))
             }

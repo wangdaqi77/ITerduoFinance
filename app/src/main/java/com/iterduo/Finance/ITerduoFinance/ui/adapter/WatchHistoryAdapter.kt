@@ -36,7 +36,7 @@ class WatchHistoryAdapter(context: Context, dataList: ArrayList<HomeBean.Issue.I
                 override fun loadImage(iv: ImageView, path: String) {
                     GlideApp.with(mContext)
                             .load(path)
-                            .placeholder(R.drawable.placeholder_banner)
+                            .placeholder(R.drawable.placeholder_image)
                             .transition(DrawableTransitionOptions().crossFade())
                             .into(iv)
                 }

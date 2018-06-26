@@ -9,7 +9,6 @@ import android.support.v4.util.Pair
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import com.iterduo.Finance.ITerduoFinance.Constants
 import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.ExpressNewsItem
@@ -67,7 +66,7 @@ class ExpressNewsAdapter(context: Context, data: ArrayList<ExpressNewsItem>)
      * 加载 content item
      */
     private fun setExpressNewsItem(holder: ViewHolder, itemData: ExpressNewsItem) {
-        val defPlaceHolder = R.drawable.placeholder_banner
+        val defPlaceHolder = R.drawable.placeholder_image
         val title = itemData.title
         val content = itemData.content
         val author = itemData.author

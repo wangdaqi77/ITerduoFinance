@@ -99,7 +99,7 @@ class VideoDetailAdapter(mContext: Context, data: ArrayList<HomeBean.Issue.Item>
                                 GlideApp.with(mContext)
                                         .load(path)
                                         .optionalTransform(GlideRoundTransform())
-                                        .placeholder(R.drawable.placeholder_banner)
+                                        .placeholder(R.drawable.placeholder_image)
                                         .into(iv)
                             }
                         })
