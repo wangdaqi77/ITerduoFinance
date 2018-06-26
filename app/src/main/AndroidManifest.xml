@@ -95,6 +95,7 @@
 
 
         <!--分享相关-->
+        <meta-data android:value="5b0e5252f29d984e710000c6" android:name="UMENG_APPKEY"/>
         <!--微博-->
         <activity
             android:name="com.umeng.socialize.media.WBShareCallBackActivity"

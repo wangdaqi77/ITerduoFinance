@@ -128,3 +128,7 @@ public static final ** CREATOR;
 
 -keep class com.linkedin.** { *; }
 -keepattributes Signature
+
+-keep class com.iterduo.Finance.ITerduoFinance.api.** { *; }
+-keep class com.iterduo.Finance.ITerduoFinance.mvp.model.** { *; }
+-keep class com.iterduo.Finance.ITerduoFinance.MyApplication
