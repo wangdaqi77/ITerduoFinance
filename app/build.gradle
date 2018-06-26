@@ -20,9 +20,12 @@ android {
         applicationId "com.iterduo.Finance.ITerduoFinance"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 5
-        versionName "1.2.2"
+        versionCode 1
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath true
@@ -32,7 +35,6 @@ android {
         // 实现毛玻璃那种透明的效果需要添加的库
         renderscriptTargetApi 19
         renderscriptSupportModeEnabled true    // Enable RS support
-
         ndk {
 
             //APP的build.gradle设置支持的SO库架构
@@ -42,12 +44,14 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            shrinkResources = false
             debuggable true
             signingConfig signingConfigs.config
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            shrinkResources = true
             debuggable false
             signingConfig signingConfigs.config
             zipAlignEnabled true
@@ -57,7 +61,7 @@ android {
     // 自定义输出配置
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "kotlinmvp_v${variant.versionName}_${variant.name}.apk"
+            outputFileName = "iterduo_v${variant.versionName}_${variant.name}.apk"
         }
     }
 
