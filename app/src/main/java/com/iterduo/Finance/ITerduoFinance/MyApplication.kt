@@ -76,8 +76,7 @@ class MyApplication : Application() {
 
         UMConfigure.init(this, "5b0e5252f29d984e710000c6"
                 , "umeng", UMConfigure.DEVICE_TYPE_PHONE, "")//58edcfeb310c93091c000be2 5965ee00734be40b580001a0
-        //TODO WQ 第二个参数未更改
-        PlatformConfig.setWeixin("wx92d5b814c6cf7498", "3baf1193c85774b3fd9d18447d76cab0")
+        PlatformConfig.setWeixin("wx92d5b814c6cf7498", "d3a50391b35c2cbdaaf83444018ab790")
         //豆瓣RENREN平台目前只能在服务器端配置
 //        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com")
 //        PlatformConfig.setYixin("yxc0614e80c9304c11b0391514d09f13bf")
