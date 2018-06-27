@@ -82,7 +82,7 @@ class ExpressNewsAdapter(context: Context, data: ArrayList<ExpressNewsItem>)
         holder.setText(R.id.tv_author_name, author)
 
         holder.setOnItemClickListener(listener = View.OnClickListener {
-            NewsDetailActivity.start(holder.itemView.context, itemData.fast_id)
+            //NewsDetailActivity.start(holder.itemView.context, itemData.fast_id)
             //goToVideoPlayer(mContext as Activity, holder.getView(R.id.iv_cover_feed), item)
         })
         holder.getView<TextView>(R.id.tv_action_share).setOnClickListener {
