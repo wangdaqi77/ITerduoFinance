@@ -66,7 +66,6 @@ class ExpressNewsAdapter(context: Context, data: ArrayList<ExpressNewsItem>)
      * 加载 content item
      */
     private fun setExpressNewsItem(holder: ViewHolder, itemData: ExpressNewsItem) {
-        val defPlaceHolder = R.drawable.placeholder_image
         val title = itemData.title
         val content = itemData.content
         val author = itemData.author
