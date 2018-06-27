@@ -30,48 +30,45 @@ object DateUtils {
     }
 
 
-    fun getNewsTime(time: Int?): String? {
-        if (time == null) return null
-        val date = time * 1000L
+    fun getNewsTime(newsTime: Int?): String? {
+        if (newsTime == null) return null
+        val newsDate = newsTime * 1000L
         val sb = StringBuffer()
-        val minMill = (60 * 1000).toLong()//1min
-        val hourMill = 60 * minMill//1hour
-        val dayMill = 24 * hourMill//1day
+        // xinwen
+        val news = Calendar.getInstance()
+        news.timeInMillis = newsDate
         //当前时间
-        val now = Calendar.getInstance().timeInMillis
-        // 相减之后时间差
-        val deltime = now - date
-        val day = deltime / dayMill
-        if (day > 0) {
-            //一个月内
-            if (day <= 30) {
-                when (day) {
-                    1L -> sb.append("昨天")
-                    2L -> sb.append("前天")
-                    else -> sb.append(getPatternTime(date, P4))
-                }
-            } else {
-                sb.append(getPatternTime(date, P3))
-            }
-        } else {
-            //小于1天
+        val now = Calendar.getInstance()
 
-            val hour = deltime / hourMill
-            if (hour > 0) {
-                //大于1小时
-                sb.append(hour.toString() + "小时前")
-            } else {
-                //小于1小时
-                val minute = deltime / minMill
-                if (minute > 0) {
-                    //大于1分钟
-                    sb.append(minute.toString() + "分钟前")
-                } else {
-                    //小于1分钟
-                    sb.append("刚刚")
+        if (news.get(Calendar.YEAR) == now.get(Calendar.YEAR)) {
+            val disDay = now.get(Calendar.DAY_OF_YEAR) - news.get(Calendar.DAY_OF_YEAR)
+            when (disDay) {
+                0 -> {
+                    val disHour = now.get(Calendar.DAY_OF_YEAR) - news.get(Calendar.DAY_OF_YEAR)
+                    if (disHour > 0) {
+                        //大于1小时
+                        sb.append(disHour.toString() + "小时前")
+                    } else {
+                        //小于1小时
+                        val disMinute = now.get(Calendar.MINUTE) - news.get(Calendar.MINUTE)
+                        if (disMinute > 0) {
+                            //大于1分钟
+                            sb.append(disMinute.toString() + "分钟前")
+                        } else {
+                            //小于1分钟
+                            sb.append("刚刚")
+                        }
+                    }
                 }
+                1 -> sb.append("昨天")
+                2 -> sb.append("前天")
+                else -> sb.append(getPatternTime(newsDate, P4))
             }
+
+        } else {
+            sb.append(getPatternTime(newsDate, P3))
         }
+
         return sb.toString()
     }
 }
