@@ -26,9 +26,9 @@ data class NewsItem(
         val read_num: Long,
         val pub_time: Int,
         val author: String,
-        val small_url: String,
+        val small_url: String?,
         val news_id: Int,
-        val jump_url: String
+        val url: String
 ) : IMultiItem {
     override fun getItemType(): Int = IMultiItem.ITEM_TYPE_CONTENT
 }

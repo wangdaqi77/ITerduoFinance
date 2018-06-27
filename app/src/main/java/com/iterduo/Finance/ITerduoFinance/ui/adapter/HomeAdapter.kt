@@ -24,7 +24,7 @@ import io.reactivex.Observable
  * desc: 首页精选的 Adapter
  */
 
-class HomeAdapter(context: Context, val bannerList: ArrayList<HomeBanner>, data: ArrayList<NewsItem>)
+class HomeAdapter(context: Context, bannerList: ArrayList<HomeBanner>, data: ArrayList<NewsItem>)
     : CommonMultiItemAdapter<HomeBanner, NewsItem, IFooterItem>(context, bannerList, data, null, -1) {
 
     /**
@@ -93,13 +93,11 @@ class HomeAdapter(context: Context, val bannerList: ArrayList<HomeBanner>, data:
      * 加载 content item
      */
     private fun setNewsItem(holder: ViewHolder, itemData: NewsItem) {
-        val title = itemData.title ?: ""
-        val author = itemData.author ?: ""
-        val coverFoodUrl = itemData.small_url ?: ""
+        val title = itemData.title
+        val author = itemData.author
+        val coverFoodUrl = itemData.small_url
         val time = DateUtils.getNewsTime(itemData.pub_time)
         val readedStr = itemData.read_num.toReadedStr()
-
-
 
         if (coverFoodUrl.isNullOrEmpty()) {
             GlideApp.with(mContext)
@@ -116,16 +114,16 @@ class HomeAdapter(context: Context, val bannerList: ArrayList<HomeBanner>, data:
                     .transition(DrawableTransitionOptions().crossFade())
                     .into(holder.getView(R.id.iv_cover_feed))
         }
-        holder.setText(R.id.tv_title, title ?: "")
+        holder.setText(R.id.tv_title, title)
 
         holder.setText(R.id.tv_time, time ?: "")
 
-        holder.setText(R.id.tv_author_name, author ?: "")
+        holder.setText(R.id.tv_author_name, author)
 
         holder.setText(R.id.tv_read, "${readedStr}人阅读")
 
         holder.setOnItemClickListener(listener = View.OnClickListener {
-            NewsDetailActivity.start(holder.itemView.context, itemData.jump_url)
+            NewsDetailActivity.start(holder.itemView.context, itemData.url)
             //goToNewsDetail(mContext as Activity, holder.getView(R.id.iv_cover_feed), itemData.jump_url)
         })
 
