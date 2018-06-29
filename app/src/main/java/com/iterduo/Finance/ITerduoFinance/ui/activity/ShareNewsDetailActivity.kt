@@ -25,6 +25,7 @@ import com.umeng.socialize.ShareAction
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import com.umeng.socialize.media.UMImage
+import java.util.*
 
 
 /**
@@ -117,7 +118,7 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
     private fun saveBitmap2File(bitmap: Bitmap) {
         try {
             // 将截图保存在SD卡根目录的test.png图像文件中
-            val fos = FileOutputStream(File(FileManager.getRoot(Config.FILE_SHARE_IMAGES), "test.png"))
+            val fos = FileOutputStream(File(FileManager.getRoot(Config.FILE_SHARE_IMAGES), "iterduo_${Calendar.getInstance().timeInMillis}.png"))
             // 将Bitmap对象中的图像数据压缩成png格式的图像数据，并将这些数据保存在test.png文件中
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
             // 关闭文件输出流
