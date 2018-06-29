@@ -118,14 +118,15 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
     private fun saveBitmap2File(bitmap: Bitmap) {
         try {
             // 将截图保存在SD卡根目录的test.png图像文件中
-            val fos = FileOutputStream(File(FileManager.getRoot(Config.FILE_SHARE_IMAGES), "iterduo_${Calendar.getInstance().timeInMillis}.png"))
+            val root = FileManager.getRoot(Config.FILE_SHARE_IMAGES)
+            val fos = FileOutputStream(File(root, "iterduo_${Calendar.getInstance().timeInMillis}.png"))
             // 将Bitmap对象中的图像数据压缩成png格式的图像数据，并将这些数据保存在test.png文件中
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
             // 关闭文件输出流
             fos.close()
-            showToast("保存成功")
+            showToast("保存成功 路径：$root")
         } catch (e: Exception) {
-            showToast("保存失败")
+            showToast("上帝，保存失败了 ${e.message}")
         }
     }
 
