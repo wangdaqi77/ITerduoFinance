@@ -1,9 +1,12 @@
 package com.a91power.a91pos.common
 
 import android.content.Context
+import android.support.annotation.LayoutRes
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.widget.ScrollView
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -37,7 +40,7 @@ fun <T> ViewGroup.find(calzz: Class<T>): T? {
 /**
  * 有无更多数据 UI控制
  */
-fun SmartRefreshLayout.setNoMore(noMore: Boolean) {
+fun SmartRefreshLayout.setNoMore(noMore: Boolean, @LayoutRes layoutId: Int = R.layout.no_more_list) {
     isEnableLoadmore = !noMore
     val declaredField = javaClass.getDeclaredField("mRefreshContent")
     declaredField.isAccessible = true
@@ -46,66 +49,78 @@ fun SmartRefreshLayout.setNoMore(noMore: Boolean) {
 
     when (contentView) {
         is RecyclerView -> {
-            contentView.setNoMore(noMore)
+            contentView.setNoMore(noMore, layoutId)
         }
         is ViewGroup -> {
             val recyclerView = contentView.find(RecyclerView::class.java)
-            recyclerView?.setNoMore(noMore)
+            recyclerView?.setNoMore(noMore, layoutId)
         }
     }
 }
 
-fun RecyclerView.setNoMore(noMore: Boolean) {
+fun RecyclerView.setNoMore(noMore: Boolean, @LayoutRes layoutId: Int = R.layout.no_more_list) {
 
     if (adapter is BaseQuickAdapter<*, *>) {
-        if (noMore) {
-            val view = View.inflate(context, R.layout.common_footer_no_more, null)
-            (adapter as BaseQuickAdapter<*, *>).setFooterView(view)
-        } else {
-            (adapter as BaseQuickAdapter<*, *>).removeAllFooterView()
-        }
+        (adapter as BaseQuickAdapter<*, *>).setNoMore(context, noMore, layoutId)
     }
 }
 
-
-fun <T, K : BaseViewHolder?> BaseQuickAdapter<T, K>.showEmptyView(context: Context?, desc: CharSequence, iconId: Int, show: Boolean) {
-    if (show) {
-        if (context == null) return
-        var view: View
-        if (iconId == -1) {
-            // 不带图标
-            view = View.inflate(context, R.layout.common_empty_view, null)
-        } else {
-            // 带图标
-            view = View.inflate(context, R.layout.common_empty_view_icon, null)
-            //view.findViewById<ImageView>(R.id.iv_icon).setImageResource(iconId)
-        }
-        view.findViewById<TextView>(R.id.tv_desc).text = desc
-        emptyView = view
+fun <T, H : BaseViewHolder> BaseQuickAdapter<T, H>.setNoMore(context: Context, noMore: Boolean, @LayoutRes layoutId: Int = R.layout.no_more_list) {
+    if (noMore) {
+        val view = View.inflate(context, layoutId, null)
+        setFooterView(view)
     } else {
-        dismissEmptyView()
+        removeAllFooterView()
     }
 }
 
-fun <T, K : BaseViewHolder?> BaseQuickAdapter<T, K>.dismissEmptyView() {
-    if (emptyView != null) {
-        (emptyView as ViewGroup).removeAllViews()
-    }
-}
-
-/**
- * 在setNewData之后调用
- */
-fun <T, K : BaseViewHolder?> BaseQuickAdapter<T, K>.showEmptyView(context: Context?, desc: CharSequence, iconId: Int) {
-    showEmptyView(context, desc, iconId, data == null || data.isEmpty())
-}
-
-/**
- * 在setNewData之后调用
- */
-fun <T, K : BaseViewHolder?> BaseQuickAdapter<T, K>.showEmptyView(context: Context?, desc: CharSequence) {
-    showEmptyView(context, desc, -1)
-}
+///**
+// * 在setNewData之后调用
+// */
+//fun <T, K : BaseViewHolder?> BaseQuickAdapter<T, K>.showEmptyView(context: Context?, @LayoutRes layoutId: Int) {
+//    showEmptyView(context, layoutId, null)
+//}
+//
+///**
+// * 在setNewData之后调用
+// */
+//fun <T, K : BaseViewHolder?> BaseQuickAdapter<T, K>.showEmptyView(context: Context?, @LayoutRes layoutId: Int, desc: CharSequence?) {
+//    showEmptyView(context, layoutId, desc, null)
+//}
+//
+///**
+// * 在setNewData之后调用
+// */
+//fun <T, K : BaseViewHolder?> BaseQuickAdapter<T, K>.showEmptyView(context: Context?, @LayoutRes layoutId: Int, desc: CharSequence?, @DrawableRes iconId: Int?) {
+//    showEmptyView(context, layoutId, desc, iconId, data == null || data.isEmpty())
+//}
+//
+///**
+// * @param desc 描述 不设置置为null         xml ID 必须为empty_tv_desc
+// * @param iconId 图片id 不设置置为null     xml ID 必须为empty_iv_icon
+// */
+//fun <T, K : BaseViewHolder?> BaseQuickAdapter<T, K>.showEmptyView(context: Context?, @LayoutRes layoutId: Int, desc: CharSequence?, @DrawableRes iconId: Int?, show: Boolean) {
+//    if (show) {
+//        if (context == null) return
+//        val view = View.inflate(context, layoutId, null)
+//        emptyView = view?.apply {
+//            if (iconId != null) {
+//                view.findViewById<ImageView>(R.id.empty_iv_icon)?.setImageResource(iconId)
+//            }
+//            if (desc != null) {
+//                view.findViewById<TextView>(R.id.empty_tv_desc)?.text = desc
+//            }
+//        }
+//    } else {
+//        dismissEmptyView()
+//    }
+//}
+//
+//fun <T, K : BaseViewHolder?> BaseQuickAdapter<T, K>.dismissEmptyView() {
+//    if (emptyView != null) {
+//        (emptyView as ViewGroup).removeAllViews()
+//    }
+//}
 
 
 /**
@@ -130,6 +145,26 @@ fun BaseViewHolder.setTextForDef(tvId: Int, str: String?, defStr: String?) {
 fun BaseViewHolder.setTextForDef(tvId: Int, str: String?) {
     setTextForDef(tvId, str, null)
 }
+
+fun View.attachToScrollView() {
+    if (parent is ScrollView) return
+    viewTreeObserver?.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            if (parent == null) return
+            viewTreeObserver?.removeOnGlobalLayoutListener(this)
+            if (parent is ScrollView) return
+            val parentGroup = parent as ViewGroup
+
+            val newLayoutParams = ViewGroup.MarginLayoutParams(layoutParams.width, layoutParams.height)
+            val scrollView = ScrollView(context)
+            val indexOfChild = parentGroup.indexOfChild(this@attachToScrollView)
+            parentGroup.removeViewAt(indexOfChild)
+            parentGroup.addView(scrollView, indexOfChild, layoutParams)
+            scrollView.addView(this@attachToScrollView, newLayoutParams)
+        }
+    })
+}
+
 
 /**
  * 阅读量转换

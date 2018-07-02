@@ -2,25 +2,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="130dp">
-
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_marginTop="15dp"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/iv_cover_feed"
+        android:layout_width="120dp"
+        android:layout_height="75dp"
+        android:scaleType="fitXY"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/placeholder_image" />
     <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingEnd="15dp"
-        android:paddingStart="15dp"
-        android:paddingTop="15dp">
+        android:orientation="vertical">
 
         <LinearLayout
+            android:minHeight="48dp"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:lineSpacingExtra="0dp"
@@ -28,49 +37,55 @@
                 android:paddingEnd="10dp"
                 android:textColor="@color/item_title_text"
                 android:textSize="17dp"
-                tools:text="我正在" />
+                tools:text="我正在
+ghfds范德萨
+发的说法" />
 
             <ImageView
-                android:id="@+id/iv_cover_feed"
+                android:id="@+id/place"
                 android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/placeholder_image" />
+                android:layout_height="1dp"
+                android:scaleType="fitXY" />
 
         </LinearLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp">
-<LinearLayout
-    android:id="@+id/ll_tag_layout"
-    android:orientation="horizontal"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/color_item_tag"
-        android:textSize="12dp"
-        tools:text="昨天" />
-    <View
-        android:layout_width="1dp"
-        android:layout_height="15dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@color/color_darker_gray" />
-    <TextView
-        android:id="@+id/tv_author_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/color_item_tag"
-        android:textSize="12dp"
-        tools:text="耳朵君" />
 
-</LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_tag_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_item_tag"
+                    android:textSize="12dp"
+                    tools:text="昨天" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:background="@color/color_darker_gray" />
+
+                <TextView
+                    android:id="@+id/tv_author_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_item_tag"
+                    android:textSize="12dp"
+                    tools:text="耳朵君" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_read"
@@ -94,7 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/color_darker_gray"
+        android:background="@color/item_divider"
         android:paddingEnd="15dp"
         android:paddingStart="15dp" />
 </RelativeLayout>

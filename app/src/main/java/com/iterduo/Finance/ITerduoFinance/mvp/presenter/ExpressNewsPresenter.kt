@@ -35,7 +35,6 @@ class ExpressNewsPresenter : BasePresenter<ExpressNewsContract.View>(), ExpressN
                     mRootView?.apply {
                         dismissLoading()
                         page++
-
                         setData(expressNews.data.fnews_list)
 
                     }
@@ -60,9 +59,9 @@ class ExpressNewsPresenter : BasePresenter<ExpressNewsContract.View>(), ExpressN
                 homeModel.getExpressNewsList(page, pageSize)
                         .subscribe({ expressNews ->
                             mRootView?.apply {
-                                dismissLoading()
                                 page++
-                                setMoreData(expressNews.data.fnews_list)
+                                val noMore = expressNews.data.total_count <= expressNews.data.page * pageSize
+                                setMoreData(expressNews.data.fnews_list, noMore)
                             }
 
                         }, { t ->

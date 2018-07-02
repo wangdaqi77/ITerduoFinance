@@ -50,7 +50,8 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
                     page++
                     mRootView?.apply {
                         dismissLoading()
-                        homeData.bannerData = HomeBanner(this@HomePresenter.bannerList ?: ArrayList())
+                        homeData.bannerData = HomeBanner(this@HomePresenter.bannerList
+                                ?: ArrayList())
                         setHomeData(homeData!!)
                     }
 
@@ -76,11 +77,12 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
         val disposable =
                 homeModel.loadMoreData(page, pageSize)
                         .subscribe({ homeBean ->
+
                             page++
                             mRootView?.apply {
-                                setMoreData(homeBean.data.news_list)
+                                val noMore = homeBean.data.total_count <= homeBean.data.page * pageSize
+                                setMoreData(homeBean.data.news_list, noMore)
                             }
-
                         }, { t ->
                             mRootView?.apply {
                                 showError(ExceptionHandle.handleException(t), ExceptionHandle.errorCode)

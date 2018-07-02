@@ -4,18 +4,18 @@ import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.a91power.a91pos.common.setNoMore
 import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.base.BaseFragment
 import com.iterduo.Finance.ITerduoFinance.mvp.contract.ExpressNewsContract
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.ExpressNewsItem
-import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBean
 import com.iterduo.Finance.ITerduoFinance.mvp.presenter.ExpressNewsPresenter
 import com.iterduo.Finance.ITerduoFinance.net.exception.ErrorStatus
 import com.iterduo.Finance.ITerduoFinance.showToast
 import com.iterduo.Finance.ITerduoFinance.ui.adapter.ExpressNewsAdapter
 import com.iterduo.Finance.ITerduoFinance.utils.StatusBarUtil
-import com.orhanobut.logger.Logger
 import com.scwang.smartrefresh.header.MaterialHeader
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import kotlinx.android.synthetic.main.fragment_express_news.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,7 +24,7 @@ import java.util.*
  * Created by wq on 2018/6.4.
  * desc: 快讯
  */
-class ExpressNewsFragment : BaseFragment() , ExpressNewsContract.View {
+class ExpressNewsFragment : BaseFragment(), ExpressNewsContract.View {
     private val mPresenter by lazy { ExpressNewsPresenter() }
     private val linearLayoutManager by lazy {
         LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -39,10 +39,10 @@ class ExpressNewsFragment : BaseFragment() , ExpressNewsContract.View {
 
     private var mExpressNewsAdapter: ExpressNewsAdapter? = null
 
-    private var loadingMore = false
-
     private var isRefresh = false
     private var mMaterialHeader: MaterialHeader? = null
+    private var mClassicsFooter: ClassicsFooter? = null
+
     companion object {
         fun getInstance(title: String): ExpressNewsFragment {
             val fragment = ExpressNewsFragment()
@@ -70,9 +70,14 @@ class ExpressNewsFragment : BaseFragment() , ExpressNewsContract.View {
         mRefreshLayout.setEnableHeaderTranslationContent(true)
         mRefreshLayout.setOnRefreshListener {
             isRefresh = true
+            mExpressNewsAdapter?.setNoMore(this@ExpressNewsFragment.activity, false)
             mPresenter.requestData()
         }
+        mRefreshLayout.setOnLoadmoreListener {
+            mPresenter.loadMoreData()
+        }
         mMaterialHeader = mRefreshLayout.refreshHeader as MaterialHeader?
+        mClassicsFooter = mRefreshLayout.refreshFooter as ClassicsFooter?
         //打开下拉刷新区域块背景:
         mMaterialHeader?.setShowBezierWave(true)
         //设置下拉刷新主题颜色
@@ -82,17 +87,16 @@ class ExpressNewsFragment : BaseFragment() , ExpressNewsContract.View {
         mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    val childCount = mRecyclerView.childCount
-                    val itemCount = mRecyclerView.layoutManager.itemCount
-                    val firstVisibleItem = (mRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                    if (firstVisibleItem + childCount == itemCount) {
-                        if (!loadingMore) {
-                            loadingMore = true
-                            mPresenter.loadMoreData()
-                        }
-                    }
-                }
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                    val childCount = mRecyclerView.childCount
+//                    val itemCount = mRecyclerView.layoutManager.itemCount
+//                    val firstVisibleItem = (mRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+//                    if (firstVisibleItem + childCount == itemCount) {
+//                        if (!noMore) {
+//                            mPresenter.loadMoreData()
+//                        }
+//                    }
+//                }
             }
 
             //RecyclerView滚动的时候调用
@@ -131,11 +135,11 @@ class ExpressNewsFragment : BaseFragment() , ExpressNewsContract.View {
     /**
      * 设置首页数据
      */
-    override fun setData(itemList:ArrayList<ExpressNewsItem>) {
+    override fun setData(itemList: ArrayList<ExpressNewsItem>) {
         mLayoutStatusView?.showContent()
 
         // Adapter
-        mExpressNewsAdapter = ExpressNewsAdapter(activity, itemList)
+        mExpressNewsAdapter = ExpressNewsAdapter(itemList)
 
         mRecyclerView.adapter = mExpressNewsAdapter
         mRecyclerView.layoutManager = linearLayoutManager
@@ -143,9 +147,10 @@ class ExpressNewsFragment : BaseFragment() , ExpressNewsContract.View {
 
     }
 
-    override fun setMoreData(itemList:ArrayList<ExpressNewsItem>) {
-        loadingMore = false
-        mExpressNewsAdapter?.addItemData(itemList)
+    override fun setMoreData(itemList: ArrayList<ExpressNewsItem>, noMore: Boolean) {
+        mRefreshLayout.finishLoadmore()
+        mExpressNewsAdapter?.addData(itemList)
+        mExpressNewsAdapter?.setNoMore(this@ExpressNewsFragment.activity, noMore)
     }
 
 
@@ -154,6 +159,10 @@ class ExpressNewsFragment : BaseFragment() , ExpressNewsContract.View {
      */
     override fun showError(msg: String, errorCode: Int) {
         showToast(msg)
+        if (mRefreshLayout.isLoading) {
+            mRefreshLayout.finishLoadmore()
+            return
+        }
         if (errorCode == ErrorStatus.NETWORK_ERROR) {
             mLayoutStatusView?.showNoNetwork()
         } else {

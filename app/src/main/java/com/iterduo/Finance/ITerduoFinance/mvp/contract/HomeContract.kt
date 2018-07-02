@@ -22,12 +22,12 @@ interface HomeContract {
         /**
          * 设置加载更多的数据
          */
-        fun setMoreData(itemList:List<NewsItem>)
+        fun setMoreData(itemList: List<NewsItem>, noMore: Boolean)
 
         /**
          * 显示错误信息
          */
-        fun showError(msg: String,errorCode:Int)
+        fun showError(msg: String, errorCode: Int)
 
 
     }

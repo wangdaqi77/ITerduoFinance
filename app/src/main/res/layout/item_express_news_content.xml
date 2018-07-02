@@ -89,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginTop="15dp"
-            android:background="@color/color_darker_gray"
+            android:background="@color/item_divider"
             android:paddingEnd="15dp"
             android:paddingStart="15dp" />
     </LinearLayout>

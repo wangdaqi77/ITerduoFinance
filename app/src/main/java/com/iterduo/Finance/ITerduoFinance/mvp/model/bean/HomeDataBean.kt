@@ -1,5 +1,6 @@
 package com.iterduo.Finance.ITerduoFinance.mvp.model.bean
 
+import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.iterduo.Finance.ITerduoFinance.mvp.model.base.IMultiItem
 
 /**
@@ -14,21 +15,22 @@ data class HomeDataBean(
 )
 
 class NewsList {
-    var page: Int? = null
-    var total_count: Int? = null
+    var page: Int = 0
+    var total_count: Int = 0
     val news_list = ArrayList<NewsItem>()
 }
 
 data class NewsItem(
-        val title: String,
-        val subtitle: String,
-        val desc: String,
-        val read_num: Long,
-        val pub_time: Int,
-        val author: String,
-        val small_url: String?,
-        val news_id: Int,
-        val url: String
-) : IMultiItem {
-    override fun getItemType(): Int = IMultiItem.ITEM_TYPE_CONTENT
+        var bannerData: HomeBanner?
+) : IMultiItem, MultiItemEntity {
+    val title: String = ""
+    val subtitle: String = ""
+    val desc: String = ""
+    val read_num: Long = 0
+    val pub_time: Int = 0
+    val author: String = ""
+    val small_url: String = ""
+    val news_id: Int = 0
+    val url: String = ""
+    override fun getItemType(): Int = if (bannerData == null) IMultiItem.ITEM_TYPE_CONTENT else IMultiItem.ITEM_TYPE_HEADER
 }

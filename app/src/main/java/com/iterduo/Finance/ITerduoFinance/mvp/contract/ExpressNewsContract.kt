@@ -18,7 +18,7 @@ interface ExpressNewsContract {
         /**
          * 设置加载更多的数据
          */
-        fun setMoreData(itemList:ArrayList<ExpressNewsItem>)
+        fun setMoreData(itemList:ArrayList<ExpressNewsItem>, noMore: Boolean)
 
         /**
          * 显示错误信息

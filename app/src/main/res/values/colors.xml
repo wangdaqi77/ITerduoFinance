@@ -59,8 +59,7 @@
     <color name="share_pager_text">#101D37</color>
     <color name="main_tab_sel">#3072F6</color>
 
-
-
+    <color name="item_divider">#f2f2f2</color>
 
 
 </resources>

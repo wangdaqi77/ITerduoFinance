@@ -9,18 +9,20 @@ data class ExpressNews(
         val data: ExpressNewsList,
         val error: Int
 )
+
 class ExpressNewsList {
-    var page: Int? = null
-    var total_count: Int? = null
+    var page: Int = 0
+    var total_count: Int = 0
     val fnews_list = ArrayList<ExpressNewsItem>()
 }
+
 data class ExpressNewsItem(
-    val title: String,
-    val subtitle: String,
-    val pub_time: Int,
-    val author: String,
-    val fast_id: String,
-    val content: String,
-    val desc: String,
-    val url: String//app下载地址
+        val title: String,
+        val subtitle: String,
+        val pub_time: Int,
+        val author: String,
+        val fast_id: String,
+        val content: String,
+        val desc: String,
+        val url: String//app下载地址
 )

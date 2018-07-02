@@ -38,8 +38,8 @@
         app:tl_textSelectColor="@color/main_tab_sel"
         app:tl_textUnselectColor="@color/color_gray"
         app:tl_textsize="10sp"
-        app:tl_underline_color="#DDDDDD"
-        app:tl_underline_height="1dp" />
+        app:tl_underline_color="@color/item_divider"
+        app:tl_underline_height="0.5dp" />
 
 
 </RelativeLayout>
