@@ -1,6 +1,7 @@
 package com.iterduo.Finance.ITerduoFinance.api
 
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.*
+import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.req.ListParamsReq
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -17,12 +18,12 @@ interface ApiService{
     @POST("v1/banner/get_banners")
     fun getBanner(): Observable<BannerBean>
 
-    @GET("v1/news/get_news_list")
-    fun getHomeNewsList(@Query("index") page: Int,@Query("size") pageSize: Int): Observable<HomeDataBean>
+    @POST("v1/news/get_news_list")
+    fun getHomeNewsList(@Body param: ListParamsReq): Observable<HomeDataBean>
 
 
-    @GET("v1/fast_news/get_fast_news_list")
-    fun getExpressNewsList(@Query("index") page: Int, @Query("size") pageSize: Int): Observable<ExpressNews>
+    @POST("v1/fast_news/get_fast_news_list")
+    fun getExpressNewsList(@Body param: ListParamsReq): Observable<ExpressNews>
 
 
     /**
