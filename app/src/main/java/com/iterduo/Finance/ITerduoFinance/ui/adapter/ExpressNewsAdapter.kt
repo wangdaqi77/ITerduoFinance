@@ -26,9 +26,8 @@ import com.iterduo.Finance.ITerduoFinance.view.recyclerview.ViewHolder
  */
 
 class ExpressNewsAdapter(data: ArrayList<ExpressNewsItem>) : BaseQuickAdapter<ExpressNewsItem, BaseViewHolder>(R.layout.item_express_news_content, data) {
-    override fun convert(helper: BaseViewHolder?, item: ExpressNewsItem?) {
-
-
+    override fun convert(helper: BaseViewHolder, item: ExpressNewsItem) {
+        setExpressNewsItem(helper, item)
     }
 
     /**
