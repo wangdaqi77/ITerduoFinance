@@ -30,7 +30,7 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@color/color_translucent"
-        app:tl_divider_color="@color/color_black"
+        app:tl_divider_color="@color/item_divider"
         app:tl_iconHeight="23dp"
         app:tl_iconWidth="23dp"
         app:tl_indicator_color="@color/colorPrimary"

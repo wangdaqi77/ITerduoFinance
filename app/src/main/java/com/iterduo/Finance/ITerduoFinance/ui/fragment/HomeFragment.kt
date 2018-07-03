@@ -75,8 +75,12 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         mPresenter.attachView(this)
         //内容跟随偏移
         mRefreshLayout.setEnableHeaderTranslationContent(true)
+        mRefreshLayout.isEnableLoadmore = true
+        mClassicsFooter?.visibility = View.GONE
         mRefreshLayout.setOnRefreshListener {
             isRefresh = true
+            mRefreshLayout.isEnableLoadmore = true
+            mClassicsFooter?.visibility = View.GONE
             mHomeAdapter?.setNoMore(context, false)
             mPresenter.requestHomeData()
         }
@@ -195,6 +199,8 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
     override fun setMoreData(itemList: List<NewsItem>, noMore: Boolean) {
         mRefreshLayout.finishLoadmore()
+        mRefreshLayout.isEnableLoadmore = !noMore
+        mClassicsFooter?.visibility = if (noMore) View.VISIBLE else View.GONE
         mHomeAdapter?.addData(itemList)
         mHomeAdapter?.setNoMore(this@HomeFragment.activity, noMore)
     }

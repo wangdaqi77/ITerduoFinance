@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import com.a91power.a91pos.common.setNoMore
 import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.base.BaseFragment
@@ -68,8 +69,12 @@ class ExpressNewsFragment : BaseFragment(), ExpressNewsContract.View {
 
         //内容跟随偏移
         mRefreshLayout.setEnableHeaderTranslationContent(true)
+        mRefreshLayout.isEnableLoadmore = true
+        mClassicsFooter?.visibility = View.GONE
         mRefreshLayout.setOnRefreshListener {
             isRefresh = true
+            mRefreshLayout.isEnableLoadmore = true
+            mClassicsFooter?.visibility = View.GONE
             mExpressNewsAdapter?.setNoMore(this@ExpressNewsFragment.activity, false)
             mPresenter.requestData()
         }
@@ -149,6 +154,8 @@ class ExpressNewsFragment : BaseFragment(), ExpressNewsContract.View {
 
     override fun setMoreData(itemList: ArrayList<ExpressNewsItem>, noMore: Boolean) {
         mRefreshLayout.finishLoadmore()
+        mRefreshLayout.isEnableLoadmore = !noMore
+        mClassicsFooter?.visibility = if (noMore) View.VISIBLE else View.GONE
         mExpressNewsAdapter?.addData(itemList)
         mExpressNewsAdapter?.setNoMore(this@ExpressNewsFragment.activity, noMore)
     }

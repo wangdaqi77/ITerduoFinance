@@ -3,27 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <ImageView
-        android:layout_marginTop="15dp"
-        android:layout_alignParentEnd="true"
         android:id="@+id/iv_cover_feed"
         android:layout_width="120dp"
         android:layout_height="75dp"
-        android:scaleType="fitXY"
+        android:layout_alignParentEnd="true"
         android:layout_marginEnd="15dp"
-        android:src="@drawable/placeholder_image" />
-    <LinearLayout
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/placeholder_image" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
         android:orientation="vertical">
 
         <LinearLayout
-            android:minHeight="48dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:orientation="horizontal">
 
             <TextView
@@ -53,7 +55,8 @@ ghfds范德萨
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp">
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="20dp">
 
             <LinearLayout
                 android:id="@+id/ll_tag_layout"
