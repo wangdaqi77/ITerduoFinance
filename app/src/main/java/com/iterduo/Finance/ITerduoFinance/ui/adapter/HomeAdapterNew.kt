@@ -17,6 +17,7 @@ import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBanner
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.NewsItem
 import com.iterduo.Finance.ITerduoFinance.ui.activity.NewsDetailActivity
 import com.iterduo.Finance.ITerduoFinance.utils.DateUtils
+import com.iterduo.Finance.ITerduoFinance.utils.NewsItemStatusUtils
 import io.reactivex.Observable
 
 /**
@@ -109,6 +110,11 @@ class HomeAdapterNew(data: ArrayList<NewsItem>) : BaseMultiItemQuickAdapter<News
         helper.setText(R.id.tv_author_name, author)
 
         helper.setText(R.id.tv_read, "${readedStr}人阅读")
+
+        helper.getView<View>(R.id.tv_title).apply {
+            val select = NewsItemStatusUtils[context, itemData.url, false] as Boolean
+            isSelected = select
+        }
 
     }
 }

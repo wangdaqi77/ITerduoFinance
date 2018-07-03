@@ -23,6 +23,7 @@ import com.iterduo.Finance.ITerduoFinance.ui.activity.NewsDetailActivity
 import com.iterduo.Finance.ITerduoFinance.ui.activity.SearchActivity
 import com.iterduo.Finance.ITerduoFinance.ui.adapter.HomeAdapter
 import com.iterduo.Finance.ITerduoFinance.ui.adapter.HomeAdapterNew
+import com.iterduo.Finance.ITerduoFinance.utils.NewsItemStatusUtils
 import com.iterduo.Finance.ITerduoFinance.utils.StatusBarUtil
 import com.orhanobut.logger.Logger
 import com.scwang.smartrefresh.header.MaterialHeader
@@ -190,6 +191,9 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         mHomeAdapter?.setOnItemClickListener { adapter, view, position ->
             val newsItem = adapter?.getItem(position) as NewsItem
             NewsDetailActivity.start(this@HomeFragment.activity, newsItem.url)
+
+            NewsItemStatusUtils.put(context, newsItem.url, true)
+            adapter.notifyItemChanged(position)
         }
         mRecyclerView.adapter = mHomeAdapter
         mRecyclerView.layoutManager = linearLayoutManager
