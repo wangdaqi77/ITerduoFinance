@@ -61,7 +61,7 @@ class HomeAdapter(context: Context, bannerList: ArrayList<HomeBanner>, data: Arr
         Observable.fromIterable(bannerList)
                 .subscribe({ list ->
                     bannerFeedList.add(list.img_url)
-                    bannerTitleList.add(list.jump_url)
+                    bannerTitleList.add(list.jump_url ?:"")
                 })
 
         //设置 banner

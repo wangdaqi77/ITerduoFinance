@@ -51,7 +51,7 @@ class HomeAdapterNew(data: ArrayList<NewsItem>) : BaseMultiItemQuickAdapter<News
         Observable.fromIterable(bannerList)
                 .subscribe({ list ->
                     bannerFeedList.add(list.img_url)
-                    bannerTitleList.add(list.jump_url)
+                    bannerTitleList.add(list.jump_url ?:"")
                 })
 
         //设置 banner
@@ -73,7 +73,9 @@ class HomeAdapterNew(data: ArrayList<NewsItem>) : BaseMultiItemQuickAdapter<News
         }
         //没有使用到的参数在 kotlin 中用"_"代替
         helper.getView<BGABanner>(R.id.banner).setDelegate { _, imageView, _, i ->
-            NewsDetailActivity.start(helper.itemView.context, bannerList[i].jump_url)
+            if(!bannerList[i].jump_url.isNullOrEmpty()){
+                NewsDetailActivity.start(helper.itemView.context, bannerList[i].jump_url)
+            }
         }
     }
 
