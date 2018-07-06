@@ -1,17 +1,15 @@
 package com.iterduo.Finance.ITerduoFinance.ui.adapter
 
-import android.app.Activity
-import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import cn.bingoogolapple.bgabanner.BGABanner
 import com.a91power.a91pos.common.toReadedStr
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.glide.GlideApp
+import com.iterduo.Finance.ITerduoFinance.glide.GlideRoundTransform
 import com.iterduo.Finance.ITerduoFinance.mvp.model.base.IMultiItem
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.HomeBanner
 import com.iterduo.Finance.ITerduoFinance.mvp.model.bean.NewsItem
@@ -63,6 +61,7 @@ class HomeAdapterNew(data: ArrayList<NewsItem>) : BaseMultiItemQuickAdapter<News
                     override fun fillBannerItem(bgaBanner: BGABanner?, imageView: ImageView?, feedImageUrl: String?, position: Int) {
                         GlideApp.with(mContext)
                                 .load(feedImageUrl)
+                                .optionalTransform(GlideRoundTransform())
                                 .transition(DrawableTransitionOptions().crossFade())
                                 .placeholder(R.drawable.placeholder_banner)
                                 .into(imageView)
