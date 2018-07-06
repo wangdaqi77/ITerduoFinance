@@ -16,11 +16,11 @@
         android:background="@color/item_divider" />
 
 
-    <com.github.mmin18.widget.RealtimeBlurView
+<!--    <com.github.mmin18.widget.RealtimeBlurView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/color_title_bg" />
+        android:background="@color/color_title_bg" />-->
     <!--
             app:tl_divider_color="@color/item_divider"
             app:tl_divider_width="0.5dp"
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/color_translucent"
+        android:background="@android:color/white"
         app:tl_iconHeight="23dp"
         app:tl_iconWidth="23dp"
         app:tl_indicator_color="@color/colorPrimary"
