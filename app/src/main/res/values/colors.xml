@@ -39,7 +39,7 @@
 
     <!-- item 标题颜色 -->
     <color name="color_item_title_nor">#101D37</color>
-    <color name="color_item_title_sel">#999999</color>
+    <color name="color_item_title_sel">#9EA4AE</color>
     <color name="color_item_tag">#9EA4AE</color>
 
     <color name="color_lighter_gray">#ddd</color>
@@ -57,7 +57,7 @@
 
     <!--耳朵财经-->
     <color name="share_pager_text">#101D37</color>
-    <color name="main_tab_sel">#3072F6</color>
+    <color name="main_tab_sel">#009bff</color>
 
     <color name="item_divider">#f2f2f2</color>
 

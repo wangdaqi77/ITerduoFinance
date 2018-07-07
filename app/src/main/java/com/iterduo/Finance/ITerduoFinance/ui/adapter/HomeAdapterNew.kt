@@ -49,7 +49,7 @@ class HomeAdapterNew(data: ArrayList<NewsItem>) : BaseMultiItemQuickAdapter<News
         Observable.fromIterable(bannerList)
                 .subscribe({ list ->
                     bannerFeedList.add(list.img_url)
-                    bannerTitleList.add(list.jump_url ?:"")
+                    bannerTitleList.add(list.jump_url ?: "")
                 })
 
         //设置 banner
@@ -61,7 +61,6 @@ class HomeAdapterNew(data: ArrayList<NewsItem>) : BaseMultiItemQuickAdapter<News
                     override fun fillBannerItem(bgaBanner: BGABanner?, imageView: ImageView?, feedImageUrl: String?, position: Int) {
                         GlideApp.with(mContext)
                                 .load(feedImageUrl)
-                                .optionalTransform(GlideRoundTransform())
                                 .transition(DrawableTransitionOptions().crossFade())
                                 .placeholder(R.drawable.placeholder_banner)
                                 .into(imageView)
@@ -72,7 +71,7 @@ class HomeAdapterNew(data: ArrayList<NewsItem>) : BaseMultiItemQuickAdapter<News
         }
         //没有使用到的参数在 kotlin 中用"_"代替
         helper.getView<BGABanner>(R.id.banner).setDelegate { _, imageView, _, i ->
-            if(!bannerList[i].jump_url.isNullOrEmpty()){
+            if (!bannerList[i].jump_url.isNullOrEmpty()) {
                 NewsDetailActivity.start(helper.itemView.context, bannerList[i].jump_url)
             }
         }
@@ -92,16 +91,18 @@ class HomeAdapterNew(data: ArrayList<NewsItem>) : BaseMultiItemQuickAdapter<News
         if (coverFoodUrl.isNullOrEmpty()) {
             GlideApp.with(mContext)
                     .load(R.drawable.placeholder_image)
-                    .placeholder(R.drawable.placeholder_image).circleCrop()
-                    .transition(DrawableTransitionOptions().crossFade())
+                    .optionalTransform(GlideRoundTransform())
+                    .placeholder(R.drawable.placeholder_image)
+//                    .transition(DrawableTransitionOptions().crossFade())
                     .into(helper.getView(R.id.iv_cover_feed))
 
         } else {
             // 加载封页图
             GlideApp.with(mContext)
                     .load(coverFoodUrl)
+                    .optionalTransform(GlideRoundTransform())
                     .placeholder(R.drawable.placeholder_image)
-                    .transition(DrawableTransitionOptions().crossFade())
+//                    .transition(DrawableTransitionOptions().crossFade())
                     .into(helper.getView(R.id.iv_cover_feed))
         }
         helper.setText(R.id.tv_title, title)

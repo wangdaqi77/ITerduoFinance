@@ -15,8 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/color_title_bg"
-            app:contentInsetStart="0dp"
-            app:layout_scrollFlags="scroll|enterAlways|snap">
+            app:contentInsetStart="0dp">
 
             <RelativeLayout
                 android:id="@+id/rel_toolbar"
@@ -48,6 +47,7 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/mRefreshLayout"
         android:layout_width="match_parent"
+        android:layout_marginBottom="51dp"
         android:layout_height="match_parent"
         android:background="@android:color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -77,8 +77,7 @@
                     android:id="@+id/mRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingBottom="@dimen/padding_tab_layout_bottom" />
+                    android:clipToPadding="false"/>
 
             </com.classic.common.MultipleStatusView>
 

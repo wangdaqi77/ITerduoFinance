@@ -12,6 +12,7 @@
         android:scaleType="fitXY"
         app:banner_indicatorGravity="bottom|center_horizontal"
         app:banner_isNumberIndicator="false"
+        app:banner_pointDrawable="@drawable/select_point_bg"
         app:banner_placeholderDrawable="@drawable/placeholder_image"
         app:banner_pointContainerBackground="@android:color/transparent"
         app:banner_tipTextColor="@android:color/transparent"

@@ -28,7 +28,8 @@
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="15dp"
+                android:layout_marginTop="1dp"
+                android:layout_height="11dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
@@ -51,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ellipsize="end"
-            android:lineSpacingExtra="0dp"
+            android:lineSpacingExtra="4dp"
             android:maxLines="2"
             android:textColor="@color/item_title_text"
             android:textSize="15dp"
@@ -62,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:lineSpacingExtra="0dp"
+            android:lineSpacingExtra="4dp"
             android:textColor="@color/color_item_content_text"
             android:textSize="14dp"
             tools:text="我正在" />

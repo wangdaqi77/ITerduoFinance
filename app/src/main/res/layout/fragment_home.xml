@@ -9,6 +9,7 @@
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/mRefreshLayout"
+        android:layout_marginBottom="51dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
@@ -38,8 +39,7 @@
                     android:id="@+id/mRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingBottom="@dimen/padding_tab_layout_bottom" />
+                    android:clipToPadding="false" />
 
             </com.classic.common.MultipleStatusView>
 
