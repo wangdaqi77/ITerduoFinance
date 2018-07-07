@@ -1,95 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nsv"
+    android:layout_height="match_parent">
+    <com.iterduo.Finance.ITerduoFinance.view.overscroll.OverScrollLayout
+        android:id="@+id/overscroll"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@android:color/white"
-        android:scrollbars="none">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/share_content_root"
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nsv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="169dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/share_img_bg" />
-
-            <TextView
-                android:id="@+id/share_tv_content"
+            <LinearLayout
+                android:id="@+id/share_content_root"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:lineSpacingExtra="4dp"
-                android:paddingEnd="30dp"
-                android:paddingStart="30dp"
-                android:textColor="@color/share_pager_text"
-                android:textSize="15dp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="50dp"
-                android:paddingEnd="30dp"
-                android:paddingStart="30dp">
+                android:background="@android:color/white"
+                android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/iv_share_er_wei_ma"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:scaleType="fitXY" />
-
-                <!--                <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:layout_marginStart="25dp"
-                                    android:layout_marginTop="25dp" />-->
+                    android:id="@+id/iv_share_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="169dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/share_img_bg" />
 
                 <TextView
-                    android:id="@+id/share_download_tip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="12dp"
-                    android:layout_toRightOf="@+id/iv_share_er_wei_ma"
-                    android:singleLine="true"
-                    android:text="@string/share_download_tip"
+                    android:id="@+id/share_tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_above="@+id/share_qc_root"
+                    android:layout_below="@+id/iv_share_header"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:lineSpacingExtra="4dp"
+                    android:paddingEnd="30dp"
+                    android:paddingStart="30dp"
                     android:textColor="@color/share_pager_text"
                     android:textSize="15dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/share_download_tip"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_toRightOf="@+id/iv_share_er_wei_ma"
-                    android:singleLine="true"
-                    android:text="@string/share_download_tip1"
-                    android:textColor="@color/share_pager_text"
-                    android:textSize="12dp" />
+                <RelativeLayout
 
-            </RelativeLayout>
+                    android:id="@+id/share_qc_root"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="50dp"
+                    android:paddingEnd="30dp"
+                    android:paddingStart="30dp">
 
-        </LinearLayout>
+                    <ImageView
+                        android:id="@+id/iv_share_er_wei_ma"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:scaleType="fitXY" />
 
-    </android.support.v4.widget.NestedScrollView>
+                    <!--                <ImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginStart="25dp"
+                                        android:layout_marginTop="25dp" />-->
 
+                    <TextView
+                        android:id="@+id/share_download_tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/share_tip"
+                        android:layout_marginStart="12dp"
+                        android:layout_toRightOf="@+id/iv_share_er_wei_ma"
+                        android:singleLine="true"
+                        android:text="@string/share_download_tip"
+                        android:textColor="@color/share_pager_text"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/share_tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_toRightOf="@+id/iv_share_er_wei_ma"
+                        android:singleLine="true"
+                        android:text="@string/share_download_tip1"
+                        android:textColor="@color/share_pager_text"
+                        android:textSize="12dp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.iterduo.Finance.ITerduoFinance.view.overscroll.OverScrollLayout>
 
     <com.iterduo.Finance.ITerduoFinance.view.ShareButtonsLayout
         android:id="@+id/share_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/backgroundColor" />
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white" />
+</RelativeLayout>

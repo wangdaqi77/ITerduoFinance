@@ -2,6 +2,7 @@ package com.iterduo.Finance.ITerduoFinance.ui.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
@@ -17,6 +18,7 @@ import com.iterduo.Finance.ITerduoFinance.utils.FileManager
 import com.iterduo.Finance.ITerduoFinance.utils.QrCodeUtil
 import com.iterduo.Finance.ITerduoFinance.utils.StatusBarUtil
 import com.iterduo.Finance.ITerduoFinance.view.ShareButtonsLayout
+import com.scwang.smartrefresh.layout.util.DensityUtil
 import com.umeng.socialize.UMShareAPI
 import kotlinx.android.synthetic.main.share_layout.*
 import java.io.File
@@ -140,6 +142,7 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
     override fun initView() {
         StatusBarUtil.darkMode(this, Color.parseColor("#ffffff"), 0F)
         share_tv_content.text = mContent
+        //share_tv_content.minHeight = Resources.getSystem().getDisplayMetrics().heightPixels
         showDownloadAPPQR(intent.getStringExtra(DOWNLOAD_URL))
         createBitmap()
         share_buttons.shareButtonOnClickListener = this@ShareNewsDetailActivity
@@ -158,10 +161,12 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
         share_content_root.run {
             viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
+                    if (share_content_root.height < nsv.height){
+                        share_content_root.minimumHeight = nsv.height
+                        share_content_root.requestLayout()
+                        return
+                    }
                     viewTreeObserver.removeOnGlobalLayoutListener(this)
-//                    if (height<nsv.height) {
-//                        share_tv_content.minHeight = nsv.height - height + share_tv_content.height
-//                    }
                     //打开图像缓存
                     isDrawingCacheEnabled = true
                     // 必须要调用measure和layout方法才能成功保存可视组件的截图到png图像文件
@@ -189,11 +194,11 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
         /** 如果不设置canvas画布为白色，则生成透明  */
         //        c.drawColor(Color.WHITE);
         v.layout(0, 0, w, h)
-        share_content_root.run {
-            if (height < nsv.height) {
-                share_tv_content.minHeight = nsv.height - height + share_tv_content.height
-            }
-        }
+//        share_content_root.run {
+//            if (height < nsv.height) {
+//                share_tv_content.minHeight = nsv.height - height + share_tv_content.height
+//            }
+//        }
         v.draw(c)
 
         return bmp

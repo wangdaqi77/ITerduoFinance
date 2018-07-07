@@ -43,6 +43,7 @@ class HomeAdapterNew(data: ArrayList<NewsItem>) : BaseMultiItemQuickAdapter<News
 
     fun bindHeaderData(helper: BaseViewHolder, header: HomeBanner) {
         val bannerList = header.bannerList
+        bannerList.addAll(header.bannerList)
         val bannerFeedList = ArrayList<String>()
         val bannerTitleList = ArrayList<String>()
         //取出banner 显示的 img 和 Title

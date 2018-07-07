@@ -41,6 +41,7 @@ object QrCodeUtil {
             hints[EncodeHintType.CHARACTER_SET] = "utf-8"
             // 容错级别
             hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.H
+            hints[EncodeHintType.MARGIN] = 0
 
             // 图像数据转换，使用了矩阵转换
             val bitMatrix = QRCodeWriter().encode(data, BarcodeFormat.QR_CODE, widthPix, heightPix, hints)
