@@ -51,7 +51,7 @@ class ExpressNewsAdapter(data: ArrayList<ExpressNewsItem>) : BaseQuickAdapter<Ex
         helper.getView<TextView>(R.id.tv_action_share).setOnClickListener {
             // 分享
             //Toast.makeText(holder.itemView.context, "分享", Toast.LENGTH_LONG).show()
-            ShareNewsDetailActivity.start(helper.itemView.context as Activity, content, downloadUrl)
+            ShareNewsDetailActivity.start(helper.itemView.context as Activity, title, content, downloadUrl)
         }
 
     }
