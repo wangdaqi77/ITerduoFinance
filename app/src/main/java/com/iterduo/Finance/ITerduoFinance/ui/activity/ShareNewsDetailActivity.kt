@@ -13,6 +13,7 @@ import com.iterduo.Finance.ITerduoFinance.R
 import com.iterduo.Finance.ITerduoFinance.base.BaseActivity
 import com.iterduo.Finance.ITerduoFinance.common.Config
 import com.iterduo.Finance.ITerduoFinance.common.ShareType
+import com.iterduo.Finance.ITerduoFinance.rx.scheduler.SchedulerUtils
 import com.iterduo.Finance.ITerduoFinance.showToast
 import com.iterduo.Finance.ITerduoFinance.utils.FileManager
 import com.iterduo.Finance.ITerduoFinance.utils.QrCodeUtil
@@ -27,6 +28,10 @@ import com.umeng.socialize.ShareAction
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import com.umeng.socialize.media.UMImage
+import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
+import io.reactivex.ObservableOnSubscribe
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 
@@ -118,29 +123,60 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
 
 
     private fun saveBitmap2File(bitmap: Bitmap) {
-        try {
-            // 将截图保存在SD卡根目录的test.png图像文件中
-            val root = FileManager.getRoot(Config.FILE_SHARE_IMAGES)
-            val fos = FileOutputStream(File(root, "iterduo_${Calendar.getInstance().timeInMillis}.png"))
-            // 将Bitmap对象中的图像数据压缩成png格式的图像数据，并将这些数据保存在test.png文件中
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
-            // 关闭文件输出流
-            fos.close()
-            showToast("保存成功 路径：$root")
-        } catch (e: Exception) {
-            showToast("上帝，保存失败了 ${e.message}")
+        // 将截图保存在SD卡根目录的test.png图像文件中
+        val root = FileManager.getRoot(Config.FILE_SHARE_IMAGES)
+        val fos = FileOutputStream(File(root, "iterduo_${Calendar.getInstance().timeInMillis}.png"))
+
+        Observable
+                .create<Boolean> { o ->
+            try {// 将Bitmap对象中的图像数据压缩成png格式的图像数据，并将这些数据保存在test.png文件中
+                val result = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+                // 关闭文件输出流
+                fos.close()
+                o.onNext(result)
+            } catch (e: Exception) {
+                o.onError(e)
+            } finally {
+                if (fos != null) {
+                    try {
+                        fos.close()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
         }
+                .compose(SchedulerUtils.ioToMain())
+                .subscribe(
+                { result ->
+                    if (result) {
+                        showToast("保存成功 路径：$root")
+                    } else {
+                        showToast("上帝，保存失败了")
+                    }
+                },
+                { e ->
+                    showToast("上帝，保存失败了 ${e.message}")
+                }
+        )
+
     }
 
     override fun layoutId(): Int = R.layout.share_layout
 
     private var mContent: String? = null
+    private var mTitle: String? = null
     override fun getExtData() {
+        mTitle = intent.getStringExtra(SHARE_TITLE)
         mContent = intent.getStringExtra(SHARE_CONTENT)
     }
 
     override fun initView() {
         StatusBarUtil.darkMode(this, Color.parseColor("#ffffff"), 0F)
+        share_tv_title.text = mTitle
+//        if (mTitle.isNullOrEmpty()) {
+//            share_tv_title.visibility = View.GONE
+//        }
         share_tv_content.text = mContent
         //share_tv_content.minHeight = Resources.getSystem().getDisplayMetrics().heightPixels
         showDownloadAPPQR(intent.getStringExtra(DOWNLOAD_URL))
@@ -161,7 +197,7 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
         share_content_root.run {
             viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
-                    if (share_content_root.height < nsv.height){
+                    if (share_content_root.height < nsv.height) {
                         share_content_root.minimumHeight = nsv.height
                         share_content_root.requestLayout()
                         return
@@ -213,10 +249,12 @@ class ShareNewsDetailActivity : BaseActivity(), ShareButtonsLayout.ShareButtonOn
     }
 
     companion object {
+        private const val SHARE_TITLE = "share_title"
         private const val SHARE_CONTENT = "share_content"
         private const val DOWNLOAD_URL = "download_url"
-        fun start(activity: Activity, content: String, downloadUrl: String) {
+        fun start(activity: Activity, title: String, content: String, downloadUrl: String) {
             val intent = Intent(activity, ShareNewsDetailActivity::class.java)
+            intent.putExtra(SHARE_TITLE, title)
             intent.putExtra(SHARE_CONTENT, content)
             intent.putExtra(DOWNLOAD_URL, downloadUrl)
             activity.startActivity(intent)

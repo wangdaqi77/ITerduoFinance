@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <com.iterduo.Finance.ITerduoFinance.view.overscroll.OverScrollLayout
         android:id="@+id/overscroll"
         android:layout_width="match_parent"
@@ -29,12 +30,27 @@
                     android:src="@drawable/share_img_bg" />
 
                 <TextView
+                    android:id="@+id/share_tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/share_tv_content"
+                    android:layout_below="@+id/iv_share_header"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:lineSpacingExtra="4dp"
+                    android:paddingEnd="30dp"
+                    android:paddingStart="30dp"
+                    android:textColor="@color/share_pager_text"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/share_tv_content"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_above="@+id/share_qc_root"
-                    android:layout_below="@+id/iv_share_header"
-                    android:layout_marginTop="30dp"
+                    android:layout_below="@+id/share_tv_title"
+                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:lineSpacingExtra="4dp"
                     android:paddingEnd="30dp"
