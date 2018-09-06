@@ -83,6 +83,8 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
     private boolean mIsFirstInvisible = true;
 
 
+    private int mPointDefHeight;
+    private int mPointDefWidth;
     private int mPointEnableHeight;
     private int mPointEnableWidth;
     private int mPointDisableHeight;
@@ -135,6 +137,9 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
         mContentBottomMargin = 0;
         mAspectRatio = 0;
 
+
+        mPointDefHeight = -1;
+        mPointDefWidth = -1;
         mPointEnableHeight = -1;
         mPointEnableWidth = -1;
         mPointDisableHeight = -1;
@@ -199,21 +204,19 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
             }
 
 
-
-
-
-        }else if (attr == R.styleable.BGABanner_banner_pointEnableHeight) {
+        } else if (attr == R.styleable.BGABanner_banner_pointDefHeight) {
+            mPointDefHeight = typedArray.getDimensionPixelSize(attr, mPointDefHeight);
+        } else if (attr == R.styleable.BGABanner_banner_pointDefWidth) {
+            mPointDefWidth = typedArray.getDimensionPixelSize(attr, mPointDefWidth);
+        } else if (attr == R.styleable.BGABanner_banner_pointEnableHeight) {
             mPointEnableHeight = typedArray.getDimensionPixelSize(attr, mPointEnableHeight);
-        }else if (attr == R.styleable.BGABanner_banner_pointEnableWidth) {
+        } else if (attr == R.styleable.BGABanner_banner_pointEnableWidth) {
             mPointEnableWidth = typedArray.getDimensionPixelSize(attr, mPointEnableWidth);
-        }else if (attr == R.styleable.BGABanner_banner_pointDisableHeight) {
+        } else if (attr == R.styleable.BGABanner_banner_pointDisableHeight) {
             mPointDisableHeight = typedArray.getDimensionPixelSize(attr, mPointDisableHeight);
-        }else if (attr == R.styleable.BGABanner_banner_pointDisableWidth) {
+        } else if (attr == R.styleable.BGABanner_banner_pointDisableWidth) {
             mPointDisableWidth = typedArray.getDimensionPixelSize(attr, mPointDisableWidth);
-        }
-
-
-        else if (attr == R.styleable.BGABanner_banner_pointAndTipMargin) {
+        } else if (attr == R.styleable.BGABanner_banner_pointAndTipMargin) {
             mPointAndTipMargin = typedArray.getDimensionPixelSize(attr, mPointAndTipMargin);
         }
     }
@@ -278,16 +281,16 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
         if (horizontalGravity == Gravity.LEFT) {
             indicatorLp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
             tipLp.addRule(RelativeLayout.RIGHT_OF, R.id.banner_indicatorId);
-            mTipTv.setPadding(mPointAndTipMargin,0,0,0);
+            mTipTv.setPadding(mPointAndTipMargin, 0, 0, 0);
             mTipTv.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         } else if (horizontalGravity == Gravity.RIGHT) {
             indicatorLp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
             tipLp.addRule(RelativeLayout.LEFT_OF, R.id.banner_indicatorId);
-            mTipTv.setPadding(0,0,mPointAndTipMargin,0);
+            mTipTv.setPadding(0, 0, mPointAndTipMargin, 0);
         } else {
             indicatorLp.addRule(RelativeLayout.CENTER_HORIZONTAL);
             tipLp.addRule(RelativeLayout.LEFT_OF, R.id.banner_indicatorId);
-            mTipTv.setPadding(0,0,mPointAndTipMargin,0);
+            mTipTv.setPadding(0, 0, mPointAndTipMargin, 0);
         }
 
         showPlaceholder();
@@ -535,16 +538,18 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
 
     private void initIndicator() {
         if (mPointRealContainerLl != null) {
+            lastEnablePoint = null;
             mPointRealContainerLl.removeAllViews();
 
             if (mIsNeedShowIndicatorOnOnlyOnePage || (!mIsNeedShowIndicatorOnOnlyOnePage && mViews.size() > 1)) {
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LWC, LWC);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(mPointDefWidth == -1 ? LWC : mPointDefWidth, mPointDefHeight == -1 ? LWC : mPointDefHeight);
                 lp.setMargins(mPointLeftRightMargin, 0, mPointLeftRightMargin, 0);
                 ImageView imageView;
                 for (int i = 0; i < mViews.size(); i++) {
                     imageView = new ImageView(getContext());
                     imageView.setLayoutParams(lp);
                     imageView.setImageResource(mPointDrawableResId);
+                    imageView.setEnabled(false);
                     mPointRealContainerLl.addView(imageView);
                 }
             }
@@ -711,6 +716,8 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
         }
     }
 
+    private View lastEnablePoint;
+
     private void switchToPoint(int newCurrentPoint) {
         if (mTipTv != null) {
             if (mTips == null || mTips.size() < 1 || newCurrentPoint >= mTips.size()) {
@@ -725,36 +732,69 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
             if (mViews != null && mViews.size() > 0 && newCurrentPoint < mViews.size() && ((mIsNeedShowIndicatorOnOnlyOnePage || (
                     !mIsNeedShowIndicatorOnOnlyOnePage && mViews.size() > 1)))) {
                 mPointRealContainerLl.setVisibility(View.VISIBLE);
-                for (int i = 0; i < mPointRealContainerLl.getChildCount(); i++) {
-                    boolean enable = i == newCurrentPoint;
-                    View pointView = mPointRealContainerLl.getChildAt(i);
-                    pointView.setEnabled(enable);
 
-                    ViewGroup.LayoutParams layoutParams = pointView.getLayoutParams();
-                    if (layoutParams != null) {
-                        if (enable) {
-                            if (mPointEnableHeight != -1) {
-                                layoutParams.height = mPointEnableHeight;
-                            }
-                            if (mPointEnableWidth != -1) {
-                                layoutParams.width = mPointEnableWidth;
-                            }
-                        } else {
-                            if (mPointDisableHeight != -1) {
-                                layoutParams.height = mPointDisableHeight;
-                            }
-                            if (mPointDisableWidth != -1) {
-                                layoutParams.width = mPointDisableWidth;
-                            }
-
-                        }
-                        pointView.setLayoutParams(layoutParams);
+                if (lastEnablePoint != null) {
+                    ViewGroup.LayoutParams layoutParams = lastEnablePoint.getLayoutParams();
+                    if (mPointDisableHeight != -1) {
+                        layoutParams.height = mPointDisableHeight;
                     }
-
-
-                    // 处理指示器选中和未选中状态图片尺寸不相等
-                     pointView.requestLayout();
+                    if (mPointDisableWidth != -1) {
+                        layoutParams.width = mPointDisableWidth;
+                    }
+                    lastEnablePoint.setLayoutParams(layoutParams);
+                    lastEnablePoint.setEnabled(false);
+                    lastEnablePoint.invalidate();
                 }
+
+                View nextPoint = mPointRealContainerLl.getChildAt(newCurrentPoint);
+                ViewGroup.LayoutParams layoutParams = nextPoint.getLayoutParams();
+
+                if (mPointEnableHeight != -1) {
+                    layoutParams.height = mPointEnableHeight;
+                }
+                if (mPointEnableWidth != -1) {
+                    layoutParams.width = mPointEnableWidth;
+                }
+
+                nextPoint.setLayoutParams(layoutParams);
+                nextPoint.setEnabled(true);
+                nextPoint.invalidate();
+
+                mPointRealContainerLl.requestLayout();
+
+                lastEnablePoint = nextPoint;
+
+//
+//                for (int i = 0; i < mPointRealContainerLl.getChildCount(); i++) {
+//                    boolean enable = i == newCurrentPoint;
+//                    View pointView = mPointRealContainerLl.getChildAt(i);
+//                    pointView.setEnabled(enable);
+//
+//                    ViewGroup.LayoutParams layoutParams = pointView.getLayoutParams();
+//                    if (layoutParams != null) {
+//                        if (enable) {
+//                            if (mPointEnableHeight != -1) {
+//                                layoutParams.height = mPointEnableHeight;
+//                            }
+//                            if (mPointEnableWidth != -1) {
+//                                layoutParams.width = mPointEnableWidth;
+//                            }
+//                        } else {
+//                            if (mPointDisableHeight != -1) {
+//                                layoutParams.height = mPointDisableHeight;
+//                            }
+//                            if (mPointDisableWidth != -1) {
+//                                layoutParams.width = mPointDisableWidth;
+//                            }
+//
+//                        }
+//                        pointView.setLayoutParams(layoutParams);
+//                    }
+
+
+                // 处理指示器选中和未选中状态图片尺寸不相等
+//                    pointView.requestLayout();
+//                }
 //                mPointRealContainerLl.requestLayout();
             } else {
                 mPointRealContainerLl.setVisibility(View.GONE);

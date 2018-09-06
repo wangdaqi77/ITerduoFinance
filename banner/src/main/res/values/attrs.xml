@@ -66,6 +66,9 @@
         <attr name="android:scaleType"/>
 
 
+        <!-- 点默认大小 -->
+        <attr name="banner_pointDefHeight" format="dimension"/>
+        <attr name="banner_pointDefWidth" format="dimension"/>
         <!-- 点选中时的大小 -->
         <attr name="banner_pointEnableHeight" format="dimension"/>
         <attr name="banner_pointEnableWidth" format="dimension"/>
