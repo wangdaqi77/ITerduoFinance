@@ -10,12 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="214dp"
         android:scaleType="fitXY"
-        app:banner_indicatorGravity="bottom|center_horizontal"
+        app:banner_indicatorGravity="right|bottom|center_horizontal"
         app:banner_isNumberIndicator="false"
         app:banner_pointDrawable="@drawable/select_point_bg"
         app:banner_placeholderDrawable="@drawable/placeholder_image"
         app:banner_pointContainerBackground="@android:color/transparent"
-        app:banner_tipTextColor="@android:color/transparent"
-        app:banner_transitionEffect="alpha" />
+        app:banner_tipTextColor="@android:color/white"
+        app:banner_tipTextSize="14dp"
+        app:banner_pointLeftRightMargin="1dp"
+        app:banner_transitionEffect="alpha"
+        app:banner_pointEnableHeight="4dp"
+        app:banner_pointEnableWidth="12dp"
+        app:banner_pointDisableHeight="4dp"
+        app:banner_pointDisableWidth="4dp"
+        />
 
 </LinearLayout>

@@ -33,15 +33,15 @@ class HomeAdapterNew(data: ArrayList<NewsItem>) : BaseMultiItemQuickAdapter<News
         val itemViewType = helper.itemViewType
         when (itemViewType) {
             IMultiItem.ITEM_TYPE_HEADER -> {
-                bindHeaderData(helper, item.bannerData!!)
+                convertForHeaderData(helper, item.bannerData!!)
             }
             IMultiItem.ITEM_TYPE_CONTENT -> {
-                setNewsItem(helper, item)
+                convertForNewsData(helper, item)
             }
         }
     }
 
-    fun bindHeaderData(helper: BaseViewHolder, header: HomeBanner) {
+    fun convertForHeaderData(helper: BaseViewHolder, header: HomeBanner) {
         val bannerList = header.bannerList
         bannerList.addAll(header.bannerList)
         val bannerFeedList = ArrayList<String>()
@@ -50,7 +50,7 @@ class HomeAdapterNew(data: ArrayList<NewsItem>) : BaseMultiItemQuickAdapter<News
         Observable.fromIterable(bannerList)
                 .subscribe({ list ->
                     bannerFeedList.add(list.img_url)
-                    bannerTitleList.add(list.jump_url ?: "")
+                    bannerTitleList.add(list.title)
                 })
 
         //设置 banner
@@ -82,7 +82,7 @@ class HomeAdapterNew(data: ArrayList<NewsItem>) : BaseMultiItemQuickAdapter<News
     /**
      * 加载 content item
      */
-    private fun setNewsItem(helper: BaseViewHolder, itemData: NewsItem) {
+    private fun convertForNewsData(helper: BaseViewHolder, itemData: NewsItem) {
         val title = itemData.title
         val author = itemData.author
         val coverFoodUrl = itemData.small_url

@@ -14,6 +14,7 @@ data class BannerBean(
 
 data class BannerItem(
     val img_url: String,
+    val title: String,
     val jump_url: String?,
     val order: Int,
     val banner_id: Int
