@@ -23,6 +23,7 @@
         app:banner_pointEnableWidth="12dp"
         app:banner_pointDisableHeight="4dp"
         app:banner_pointDisableWidth="4dp"
+        app:banner_pointAndTipMargin="30dp"
         />
 
 </LinearLayout>

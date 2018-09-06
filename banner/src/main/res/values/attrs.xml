@@ -72,6 +72,9 @@
         <!-- 点未选中时的大小 -->
         <attr name="banner_pointDisableHeight" format="dimension"/>
         <attr name="banner_pointDisableWidth" format="dimension"/>
+
+        <!--Tip与点的间距-->
+        <attr name="banner_pointAndTipMargin" format="dimension"/>
     </declare-styleable>
 
 </resources>
