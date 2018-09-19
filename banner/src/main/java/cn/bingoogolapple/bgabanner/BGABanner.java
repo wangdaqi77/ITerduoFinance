@@ -590,7 +590,8 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
 
             startAutoPlay();
         } else {
-            switchToPoint(0);
+//            switchToPoint(0);
+            switchToPointNew(0);
         }
     }
 
@@ -717,6 +718,54 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
     }
 
     private View lastEnablePoint;
+
+    private void switchToPointNew(int newCurrentPoint) {
+        if (mTipTv != null) {
+            if (mTips == null || mTips.size() < 1 || newCurrentPoint >= mTips.size()) {
+                mTipTv.setVisibility(View.GONE);
+            } else {
+                mTipTv.setVisibility(View.VISIBLE);
+                mTipTv.setText(mTips.get(newCurrentPoint));
+            }
+        }
+        if (mPointRealContainerLl != null) {
+            mPointRealContainerLl.removeAllViews();
+
+            if (mIsNeedShowIndicatorOnOnlyOnePage || (!mIsNeedShowIndicatorOnOnlyOnePage && mViews.size() > 1)) {
+
+                for (int i = 0; i < mViews.size(); i++) {
+                    ImageView imageView = new ImageView(getContext());
+                    LinearLayout.LayoutParams lp = null;
+                    if (i == newCurrentPoint) {
+                        lp = new LinearLayout.LayoutParams(mPointEnableWidth == -1 ? mPointDefWidth : mPointEnableWidth, mPointEnableHeight == -1 ? mPointDefHeight : mPointEnableHeight);
+                        imageView.setEnabled(true);
+                    } else {
+                        lp = new LinearLayout.LayoutParams(mPointDisableWidth == -1 ? mPointDefWidth : mPointDisableWidth, mPointDisableHeight == -1 ? mPointDefHeight : mPointDisableHeight);
+                        imageView.setEnabled(false);
+                    }
+
+                    lp.setMargins(mPointLeftRightMargin, 0, mPointLeftRightMargin, 0);
+                    imageView.setLayoutParams(lp);
+                    imageView.setImageResource(mPointDrawableResId);
+//                    imageView.setBackgroundColor(Color.parseColor("#ff0000"));
+
+                    mPointRealContainerLl.addView(imageView);
+                }
+            } else {
+                mPointRealContainerLl.setVisibility(View.GONE);
+            }
+        }
+
+        if (mNumberIndicatorTv != null) {
+            if (mViews != null && mViews.size() > 0 && newCurrentPoint < mViews.size() && ((mIsNeedShowIndicatorOnOnlyOnePage || (
+                    !mIsNeedShowIndicatorOnOnlyOnePage && mViews.size() > 1)))) {
+                mNumberIndicatorTv.setVisibility(View.VISIBLE);
+                mNumberIndicatorTv.setText((newCurrentPoint + 1) + "/" + mViews.size());
+            } else {
+                mNumberIndicatorTv.setVisibility(View.GONE);
+            }
+        }
+    }
 
     private void switchToPoint(int newCurrentPoint) {
         if (mTipTv != null) {
@@ -869,7 +918,8 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
     @Override
     public void onPageSelected(int position) {
         position = position % mViews.size();
-        switchToPoint(position);
+//        switchToPoint(position);
+        switchToPointNew(position);
 
         if (mOnPageChangeListener != null) {
             mOnPageChangeListener.onPageSelected(position);
